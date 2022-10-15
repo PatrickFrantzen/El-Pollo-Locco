@@ -1,9 +1,10 @@
 class MovableObject {
     x = 120;
-    y = 250;
+    y = 180;
     img;
-    height = 150;
-    width = 100;
+    height = 250;
+    width = 150;
+    imageCache = {};
     
 
     //loadImage('img/test.png')
@@ -11,6 +12,19 @@ class MovableObject {
         this.img = new Image(); //this.img = document.getElementbyId('image') <img id="image" src>
         this.img.src = path;
     };
+
+    /**
+     * 
+     * @param {Array} arr  - ['img/image1', 'img/image2',...]
+     */
+    loadImages(arr) {
+        arr.forEach((path) => {
+            let img = new Image();
+            img.src = path;
+            this.imageCache[path] = path;
+        })
+        
+    }
 
 
     moveRight() {
