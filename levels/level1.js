@@ -84,18 +84,27 @@ function createLevelCoins() {
     return coins;
 }
 
-function getCoinArc(firstArc_x, firstArc_y) {
-    let coinArcPosition_x = firstArc_x;
-    let coinArcPosition_y = firstArc_y;
+function getCoinArc(Arc_x, Arc_y) {
+    let coinArcPosition_x = Arc_x;
+    let coinArcPosition_y = Arc_y;
+    getUpwardsArc(coinArcPosition_x, coinArcPosition_y);
+}
+
+function getUpwardsArc(coinArcPosition_x, coinArcPosition_y) {
     for (let i = 0; i < 2; i++) {
         let coin = new Coin ('img/8_coin/coin_1.png', coinArcPosition_x, coinArcPosition_y);
         coins.push(coin);
         coinArcPosition_x = coinArcPosition_x + 75;
         coinArcPosition_y = coinArcPosition_y - 50;
     }
+    getDownwardsArc(coinArcPosition_x, coinArcPosition_y);
+}
+
+function getDownwardsArc(coinArcPosition_x, coinArcPosition_y) {
     for (let i = 0; i < 3; i++) {
         let coin = new Coin ('img/8_coin/coin_1.png', coinArcPosition_x, coinArcPosition_y);
         coins.push(coin);
         coinArcPosition_x = coinArcPosition_x + 75;
         coinArcPosition_y = coinArcPosition_y + 50;
-} }
+} 
+}
