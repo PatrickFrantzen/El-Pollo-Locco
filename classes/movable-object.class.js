@@ -36,7 +36,7 @@ class MovableObject {
     }
 
     playAnimation(images) {
-        let i = this.currentImage % this.IMAGES_WALKING.length; // % gibt den Rest einer Dividierung zurück
+        let i = this.currentImage % this.allImages.length; // % gibt den Rest einer Dividierung zurück
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;

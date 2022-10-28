@@ -1,6 +1,6 @@
 class Character extends MovableObject {
 
-IMAGES_WALKING = [
+    allImages = [
     'img/2_character_pepe/2_walk/W-21.png',
     'img/2_character_pepe/2_walk/W-22.png',
     'img/2_character_pepe/2_walk/W-23.png',
@@ -15,7 +15,7 @@ walking_sound = new Audio('audio/running.mp3')
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
-        this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.allImages);
         this.animate();
     }
 
@@ -41,7 +41,7 @@ walking_sound = new Audio('audio/running.mp3')
 
             if((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.level_end_x) {
             //Walk Animation
-                this.playAnimation(this.IMAGES_WALKING);
+                this.playAnimation(this.allImages);
             }
         }, 50);
 
