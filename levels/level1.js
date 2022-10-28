@@ -12,6 +12,7 @@ let numberOfClouds = 15;
 let backgroundPosition_x = -719;
 let numberOfBackgrounds = 7;
 let coinPosition_x = 300;
+let coinPosition_y = 350;
 let numberOfCoins = 15;
 
 
@@ -45,15 +46,15 @@ function createLevelClouds() {
 function createLevelBackground() {
     for (let i = 0; i < numberOfBackgrounds; i++) {
         if (backgroundnumberIsEven == true) {
-            setEvenBackgrounds();
+            getEvenBackgrounds();
         }else{
-            setOddBackgrounds();
+            getOddBackgrounds();
         }
     }
     return background;
 }
 
-function setEvenBackgrounds() {
+function getEvenBackgrounds() {
     for (let j = 0; j < evenBackgrounds.length; j++) {
         let evenBackground = new BackgroundObject(evenBackgrounds[j], backgroundPosition_x);
         background.push(evenBackground);   
@@ -62,7 +63,7 @@ function setEvenBackgrounds() {
     backgroundPosition_x = backgroundPosition_x + 719;
 }
 
-function setOddBackgrounds() {
+function getOddBackgrounds() {
     for (let k = 0; k < oddBackgrounds.length; k++) {
         let oddBackground = new BackgroundObject(oddBackgrounds[k], backgroundPosition_x);
         background.push(oddBackground);
@@ -72,10 +73,29 @@ function setOddBackgrounds() {
 }
 
 function createLevelCoins() {
+    getCoinArc(500, 200);
+    getCoinArc(1500, 200);
+    getCoinArc(2500, 200);
     for (let i = 0; i < numberOfCoins; i++) {
-        let coin = new Coin('img/8_coin/coin_1.png', coinPosition_x);
+        let coin = new Coin('img/8_coin/coin_1.png', coinPosition_x, coinPosition_y);
         coins.push(coin);
-        coinPosition_x = coinPosition_x + Math.random() * 350;
+        coinPosition_x = coinPosition_x + Math.random() * 800;
     }
     return coins;
 }
+
+function getCoinArc(firstArc_x, firstArc_y) {
+    let coinArcPosition_x = firstArc_x;
+    let coinArcPosition_y = firstArc_y;
+    for (let i = 0; i < 2; i++) {
+        let coin = new Coin ('img/8_coin/coin_1.png', coinArcPosition_x, coinArcPosition_y);
+        coins.push(coin);
+        coinArcPosition_x = coinArcPosition_x + 75;
+        coinArcPosition_y = coinArcPosition_y - 50;
+    }
+    for (let i = 0; i < 3; i++) {
+        let coin = new Coin ('img/8_coin/coin_1.png', coinArcPosition_x, coinArcPosition_y);
+        coins.push(coin);
+        coinArcPosition_x = coinArcPosition_x + 75;
+        coinArcPosition_y = coinArcPosition_y + 50;
+} }
