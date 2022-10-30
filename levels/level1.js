@@ -5,6 +5,7 @@ let enemies = [];
 let clouds = [];
 let background = [];
 let coins = [];
+let bottles = [];
 let enemiePosition_x = 300;
 let numberOfEnemies = 15;
 let cloudPosition_x = -719;
@@ -13,14 +14,18 @@ let backgroundPosition_x = -719;
 let numberOfBackgrounds = 7;
 let coinPosition_x = 300;
 let coinPosition_y = 350;
-let numberOfCoins = 15;
+let numberOfCoins = 10;
+let bottlePosition_x = 250;
+let numberOfBottles = 7;
+
 
 
 const level1 = new Level(
    createLevelEnemies(),
    createLevelClouds(),
    createLevelBackground(),
-   createLevelCoins()
+   createLevelCoins(),
+   createLevelBottles(),
 );
 
 
@@ -79,7 +84,7 @@ function createLevelCoins() {
     for (let i = 0; i < numberOfCoins; i++) {
         let coin = new Coin('img/8_coin/coin_1.png', coinPosition_x, coinPosition_y);
         coins.push(coin);
-        coinPosition_x = coinPosition_x + Math.random() * 800;
+        coinPosition_x = coinPosition_x + Math.random() * 500;
     }
     return coins;
 }
@@ -107,4 +112,13 @@ function getDownwardsArc(coinArcPosition_x, coinArcPosition_y) {
         coinArcPosition_x = coinArcPosition_x + 75;
         coinArcPosition_y = coinArcPosition_y + 50;
 } 
+}
+
+function createLevelBottles(){
+    for (let i = 0; i < numberOfBottles; i++) {
+        let bottle = new Bottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', bottlePosition_x);
+        bottles.push(bottle);
+        bottlePosition_x = bottlePosition_x + Math.random() + 500;
+    }
+    return bottles;
 }
