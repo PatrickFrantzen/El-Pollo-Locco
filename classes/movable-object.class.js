@@ -7,14 +7,14 @@ class MovableObject {
     currentImage = 0;
     speed= 0.15;
     otherDirection = false;
-    speed_Y = 0;
-    acceleration = 2.5;
+    speed_y = 0;
+    acceleration = 1.75;
 
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround()) {
-                this.y -= this.speed_Y;
-                this.speed_Y -= this.acceleration;    
+            if (this.isAboveGround() || this.speed_y > 0) {
+                this.y -= this.speed_y;
+                this.speed_y -= this.acceleration;    
             }
 
         },1000 / 25);
@@ -43,12 +43,14 @@ class MovableObject {
         
     }
 
+    moveRight() {
+        this.x += this.speed;
+    };
 
     moveLeft() {
-        setInterval( () => {
-            this.x -= this.speed;
-        }, 1000 / 60);
-    }
+        this.x -= this.speed;
+        
+    };
 
     playAnimation(images) {
         let i = this.currentImage % images.length; // % gibt den Rest einer Dividierung zurück
@@ -56,4 +58,8 @@ class MovableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
     }
+
+    jump() {
+        this.speed_y = 30;
+    };
 }

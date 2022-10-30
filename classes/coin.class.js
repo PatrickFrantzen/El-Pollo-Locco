@@ -12,7 +12,7 @@ class Coin extends MovableObject {
     constructor(imagePath, x, y) {
         super().loadImage(imagePath)
         this.loadImages(this.Coin_Images);
-        this.x = x // Math.random = zufällige Zahl zwischen 0 und 1, mulitpliziert mit 500 ergibt ein Wert zwischen 200 und 700*/
+        this.x = x;
         this.y = y;
         this.animate();
     }
