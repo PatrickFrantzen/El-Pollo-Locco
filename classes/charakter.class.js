@@ -1,6 +1,6 @@
 class Character extends MovableObject {
 
-    allImages = [
+    Walking_Images = [
     'img/2_character_pepe/2_walk/W-21.png',
     'img/2_character_pepe/2_walk/W-22.png',
     'img/2_character_pepe/2_walk/W-23.png',
@@ -9,13 +9,16 @@ class Character extends MovableObject {
     'img/2_character_pepe/2_walk/W-26.png'
 ];
 currentImage = 0;
+//y = 180;
+y = 80;
 world;
 speed = 4;
 walking_sound = new Audio('audio/running.mp3')
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
-        this.loadImages(this.allImages);
+        this.loadImages(this.Walking_Images);
+        this.applyGravity();
         this.animate();
     }
 
@@ -41,7 +44,7 @@ walking_sound = new Audio('audio/running.mp3')
 
             if((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.level_end_x) {
             //Walk Animation
-                this.playAnimation(this.allImages);
+                this.playAnimation(this.Walking_Images);
             }
         }, 50);
 

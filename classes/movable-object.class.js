@@ -1,6 +1,5 @@
 class MovableObject {
     x = 120;
-    y = 180;
     img;
     height = 250;
     width = 150;
@@ -8,6 +7,22 @@ class MovableObject {
     currentImage = 0;
     speed= 0.15;
     otherDirection = false;
+    speed_Y = 0;
+    acceleration = 2.5;
+
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround()) {
+                this.y -= this.speed_Y;
+                this.speed_Y -= this.acceleration;    
+            }
+
+        },1000 / 25);
+    };
+
+    isAboveGround() {
+        return this.y < 180;
+    }
 
     //loadImage('img/test.png')
     loadImage(path) {
@@ -36,7 +51,7 @@ class MovableObject {
     }
 
     playAnimation(images) {
-        let i = this.currentImage % this.allImages.length; // % gibt den Rest einer Dividierung zurück
+        let i = this.currentImage % images.length; // % gibt den Rest einer Dividierung zurück
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
