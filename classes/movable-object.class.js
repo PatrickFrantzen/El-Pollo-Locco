@@ -9,6 +9,8 @@ class MovableObject {
     otherDirection = false;
     speed_y = 0;
     acceleration = 1.75;
+    energy = 100;
+    lastHit = 0;
 
     applyGravity() {
         setInterval(() => {
@@ -29,6 +31,47 @@ class MovableObject {
         this.img = new Image(); //this.img = document.getElementbyId('image') <img id="image" src>
         this.img.src = path;
     };
+
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    };
+
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottle) {
+            ctx.beginPath();
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+
+    };
+
+    
+    isColliding(obj) {
+        return  (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) && 
+                (this.y + this.height) >= obj.y &&
+                (this.y) <= (obj.y + obj.height)
+    };
+
+    hit() {
+        this.energy -= 5;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit; //Difference in ms sinse last hit
+        timepassed = timepassed / 1000; // Difference in s
+        return timepassed < 1;
+    }
+
+    isDead() {
+        return this.energy == 0;
+    }
 
     /**
      * 
