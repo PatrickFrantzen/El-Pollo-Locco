@@ -6,6 +6,7 @@ class World {
     keyboard;
     camera_x = 0;
     statusbar = new Statusbar();
+    throwableObjects = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -13,23 +14,34 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run()
     }
 
     setWorld() {
         this.character.world = this;
     }
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if( this.character.isColliding(enemy)) {
-                    console.log('Collision with Character ', enemy);
-                    this.character.hit();
-                    console.log('Collision with character energy', this.character.energy)
-                }
-            });
+            this.checkCollisions();
+            this.checkThrowObjects();
         }, 200);
+    };
+
+    checkThrowObjects() {
+        if(this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x +100, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+        }
+    }
+
+    checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if( this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.energy);
+            }
+        });
     }
 
     draw() {
@@ -37,11 +49,16 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectToMap(this.level.backgroundObjects);
-        this.addToMap(this.statusbar);
         this.addObjectToMap(this.level.clouds);
+        //translate einfügen um nicht bewegliche Objekte zu verschieben
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusbar);
+        this.ctx.translate(this.camera_x, 0);
+        //translate wieder an die Ausgangsposition -> Ergebnis: Die Statusbar bewegt sich mit
         this.addObjectToMap(this.level.coins);
         this.addObjectToMap(this.level.bottles);
         this.addObjectToMap(this.level.enemies);
+        this.addObjectToMap(this.throwableObjects);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
 

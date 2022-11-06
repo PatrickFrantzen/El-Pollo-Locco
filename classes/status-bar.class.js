@@ -1,6 +1,7 @@
 class Statusbar extends DrawableObject{
 
     percentage = 100;
+    world;
 
     HEALTH_IMAGES =[
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png',
