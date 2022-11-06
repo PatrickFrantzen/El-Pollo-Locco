@@ -1,10 +1,5 @@
-class MovableObject {
-    x = 120;
-    img;
-    height = 250;
-    width = 150;
-    imageCache = {};
-    currentImage = 0;
+class MovableObject extends DrawableObject {
+
     speed= 0.15;
     otherDirection = false;
     speed_y = 0;
@@ -26,26 +21,14 @@ class MovableObject {
         return this.y < 180;
     }
 
-    //loadImage('img/test.png')
-    loadImage(path) {
-        this.img = new Image(); //this.img = document.getElementbyId('image') <img id="image" src>
-        this.img.src = path;
-    };
 
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    };
 
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottle) {
-            ctx.beginPath();
-            ctx.lineWidth = '3';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
-
-    };
+    playAnimation(images) {
+        let i = this.currentImage % images.length; // % gibt den Rest einer Dividierung zurück
+        let path = images[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+    }
 
     
     isColliding(obj) {
@@ -73,19 +56,6 @@ class MovableObject {
         return this.energy == 0;
     }
 
-    /**
-     * 
-     * @param {Array} arr  - ['img/image1', 'img/image2',...]
-     */
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        })
-        
-    }
-
     moveRight() {
         this.x += this.speed;
     };
@@ -94,13 +64,6 @@ class MovableObject {
         this.x -= this.speed;
         
     };
-
-    playAnimation(images) {
-        let i = this.currentImage % images.length; // % gibt den Rest einer Dividierung zurück
-        let path = images[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
-    }
 
     jump() {
         this.speed_y = 30;
