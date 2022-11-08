@@ -49,7 +49,7 @@ class ThrowableObject extends MovableObject {
         this.stopSplash(x);
         this.IntervalIdsplash = setInterval(() => {
             this.playAnimation(this.Splashing_Images);
-        }, 300);
+        }, 250);
     }
 
     stopSplash(x){

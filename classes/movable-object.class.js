@@ -19,7 +19,7 @@ class MovableObject extends DrawableObject {
 
     isAboveGround() {
         if (this instanceof ThrowableObject) {
-            return this.y < 350; //Ändern das es auf dem Boden auftritt und zerspringt
+            return this.y < 360; //Ändern das es auf dem Boden auftritt und zerspringt
         } else {
             return this.y < 180;
         }

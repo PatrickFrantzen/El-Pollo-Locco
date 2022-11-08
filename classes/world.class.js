@@ -5,7 +5,8 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusbar = new Statusbar();
+    statusbars = CharakterStatusbars;
+    //statusbar = new Statusbar();
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -52,7 +53,9 @@ class World {
         this.addObjectToMap(this.level.clouds);
         //translate einfügen um nicht bewegliche Objekte zu verschieben
         this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusbar);
+        this.addToMap(this.statusbars.healthbar);
+        this.addToMap(this.statusbars.coinbar);
+        this.addToMap(this.statusbars.bottlebar);
         this.ctx.translate(this.camera_x, 0);
         //translate wieder an die Ausgangsposition -> Ergebnis: Die Statusbar bewegt sich mit
         this.addObjectToMap(this.level.coins);
