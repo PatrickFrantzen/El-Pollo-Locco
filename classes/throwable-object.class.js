@@ -1,5 +1,6 @@
 class ThrowableObject extends MovableObject {
-
+    IntervalId;
+    IntervalIdsplash;
 
     Throwing_Images = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -31,23 +32,32 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speed_y = 30;
         this.applyGravity();
-        let throwInterval = setInterval( () => {
+        
+        this.IntervalId = setInterval( () => {
             if (this.isAboveGround()) {
                 this.x += 5;
             } else {
-                clearInterval(throwInterval)
-                this.splash();
-                clearInterval(this.splash);
-            }
-        }, 25);
-        
+                this.splash(this.IntervalId);
+            } 
+        }, 25)
+        setTimeout(() => {
+            this.removeBottlefromArray();
+        },3000)
     }
 
-    
-
-    splash() {
-        setInterval(() => {
+    splash(x) {
+        this.stopSplash(x);
+        this.IntervalIdsplash = setInterval(() => {
             this.playAnimation(this.Splashing_Images);
-        }, 100);
+        }, 300);
     }
+
+    stopSplash(x){
+        clearInterval(x);
+    }
+
+    removeBottlefromArray() {
+        world.throwableObjects.splice(0,1);
+    }
+    
 }
