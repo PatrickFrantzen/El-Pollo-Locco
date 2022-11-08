@@ -40,7 +40,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if( this.character.isColliding(enemy)) {
                 this.character.hit();
-                this.statusbar.setPercentage(this.character.energy);
+                this.statusbars.healthbar.setPercentage(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES);
             }
         });
     }
