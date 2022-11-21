@@ -6,6 +6,8 @@ class MovableObject extends DrawableObject {
     acceleration = 1.75;
     energy = 100;
     lastHit = 0;
+    amountOfCoins = 0;
+    amountOfBottles = 0;
 
     applyGravity() {
         setInterval(() => {
@@ -72,4 +74,21 @@ class MovableObject extends DrawableObject {
     jump() {
         this.speed_y = 30;
     };
+
+    collectCoins(obj) {
+            this.amountOfCoins = this.amountOfCoins + 1;
+            let index = this.world.level.coins.indexOf(obj);
+            this.world.level.coins.splice(index, 1);
+            console.log('this coin has index', index);
+            console.log('got this', obj);  
+    };
+
+    collectBottles(obj) {
+        this.amountOfBottles = this.amountOfBottles +1;
+        let index = this.world.level.bottles.indexOf(obj);
+        this.world.level.bottles.splice(index, 1);
+        console.log('this bottle has index', index);
+        console.log('got this', obj);
+    }
+
 }
