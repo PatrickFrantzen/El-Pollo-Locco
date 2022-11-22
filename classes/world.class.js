@@ -46,15 +46,17 @@ class World {
             };
         });*/
         this.level.coins.forEach((coin) => {
-                if(this. character.isColliding(coin)) {
+                if(this.character.isColliding(coin)) {
                     console.log('Collision with Char', coin);
                     this.character.collectCoins(coin);
+                    this.character.updateCoinbar();
                 };
         });
         this.level.bottles.forEach((bottle)=> {
                 if(this.character.isColliding(bottle)) {
                     console.log('Collision with Char', bottle);
                     this.character.collectBottles(bottle);
+                    this.character.updateBottlebar();
                  };
         })
     };

@@ -15,6 +15,7 @@ let numberOfBackgrounds = 7;
 let coinPosition_x = 300;
 let coinPosition_y = 350;
 let numberOfCoins = 10;
+let allCoins = 25;
 let bottlePosition_x = 250;
 let numberOfBottles = 7;
 
