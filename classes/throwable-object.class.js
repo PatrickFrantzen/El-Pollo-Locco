@@ -1,6 +1,12 @@
 class ThrowableObject extends MovableObject {
     IntervalId;
     IntervalIdsplash;
+    offset = {
+        top: 5,
+        left: 5,
+        right: 5,
+        bottom: 5
+    };
 
     Throwing_Images = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -42,7 +48,7 @@ class ThrowableObject extends MovableObject {
         }, 25)
         setTimeout(() => {
             this.removeBottlefromArray();
-        },3000)
+        },3000);
     }
 
     splash(x) {

@@ -7,6 +7,8 @@ class World {
     camera_x = 0;
     statusbars = CharakterStatusbars;
     throwableObjects = [];
+    throw = false;
+    
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -29,9 +31,14 @@ class World {
     };
 
     checkThrowObjects() {
-        if(this.keyboard.D) {
+        if(this.keyboard.D && this.character.amountOfBottles >= 1) {
             let bottle = new ThrowableObject(this.character.x +100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.throw = true;
+            this.character.amountOfBottles = this.character.amountOfBottles - 1;
+            this.character.updateBottlebar();
+        } else {
+            this.throw = false;
         }
     };
 
@@ -41,24 +48,45 @@ class World {
     checkCollisions() {
         /*this.level.enemies.forEach((enemy) => {
             if( this.character.isColliding(enemy)) {
-                this.character.hit();
+                this.character.hit(5);
                 this.statusbars.healthbar.setPercentage(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES);
             };
         });*/
+
+
         this.level.coins.forEach((coin) => {
                 if(this.character.isColliding(coin)) {
-                    console.log('Collision with Char', coin);
                     this.character.collectCoins(coin);
                     this.character.updateCoinbar();
                 };
         });
         this.level.bottles.forEach((bottle)=> {
                 if(this.character.isColliding(bottle)) {
-                    console.log('Collision with Char', bottle);
                     this.character.collectBottles(bottle);
                     this.character.updateBottlebar();
                  };
-        })
+        });
+        /*setTimeout(() => {
+            if (this.throw == true) {
+                let bottle = this.throwableObjects[0];
+                let endboss = this.level.enemies[15];
+                if(bottle.isColliding(endboss)) {
+                    endboss.hit(25);
+                    console.log('boss health', endboss.energy);
+                };
+            };
+        }, 50);*/
+        if (this.throw == true) {
+                let bottle = this.throwableObjects[0];
+                let endboss = this.level.enemies[15];
+            setInterval(() => {
+                if(bottle.isColliding(endboss)) {
+                    endboss.hit(25);
+                    console.log('boss health', endboss.energy);
+                };
+            }, 2000); //StopInterval nach Hit einführen
+        }
+
     };
     
     
