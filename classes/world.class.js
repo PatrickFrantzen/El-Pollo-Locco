@@ -8,7 +8,8 @@ class World {
     statusbars = CharakterStatusbars;
     throwableObjects = [];
     throw = false;
-    
+    hit = false;
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -31,8 +32,8 @@ class World {
     };
 
     checkThrowObjects() {
-        if(this.keyboard.D && this.character.amountOfBottles >= 1) {
-            let bottle = new ThrowableObject(this.character.x +100, this.character.y + 100);
+        if (this.keyboard.D && this.character.amountOfBottles >= 1) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.throw = true;
             this.character.amountOfBottles = this.character.amountOfBottles - 1;
@@ -46,50 +47,70 @@ class World {
 
 
     checkCollisions() {
-        /*this.level.enemies.forEach((enemy) => {
-            if( this.character.isColliding(enemy)) {
+        this.collidingEnemyInterval = setStoppableInterval(this.collidingEnemy.bind(this), 3000);
+        this.collidingEnemyFromAboveInterval = setStoppableInterval(this.collidingEnemyFromAbove.bind(this), 100);
+
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.character.collectCoins(coin);
+                this.character.updateCoinbar();
+            };
+        });
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                this.character.collectBottles(bottle);
+                this.character.updateBottlebar();
+            };
+        });
+        if (this.throw == true) {
+            this.hittingBossInterval = setStoppableInterval(this.hittingEndboss.bind(this), 1500);
+        };
+    }
+
+    collidingEnemy(){
+        this.level.enemies.forEach((enemy) => {
+            if( this.character.isColliding(enemy) && enemy.alive == true) {
                 this.character.hit(5);
                 this.statusbars.healthbar.setPercentage(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES);
             };
-        });*/
-
-
-        this.level.coins.forEach((coin) => {
-                if(this.character.isColliding(coin)) {
-                    this.character.collectCoins(coin);
-                    this.character.updateCoinbar();
-                };
+            clearInterval(this.collidingEnemyInterval);
         });
-        this.level.bottles.forEach((bottle)=> {
-                if(this.character.isColliding(bottle)) {
-                    this.character.collectBottles(bottle);
-                    this.character.updateBottlebar();
-                 };
-        });
-        /*setTimeout(() => {
-            if (this.throw == true) {
-                let bottle = this.throwableObjects[0];
-                let endboss = this.level.enemies[15];
-                if(bottle.isColliding(endboss)) {
-                    endboss.hit(25);
-                    console.log('boss health', endboss.energy);
-                };
+    }
+
+    collidingEnemyFromAbove() {
+        this.level.enemies.forEach((enemy) => {
+            if( this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
+                enemy.alive = false;
+                console.log('This enemy is dead', enemy);
             };
-        }, 50);*/
-        if (this.throw == true) {
-                let bottle = this.throwableObjects[0];
-                let endboss = this.level.enemies[15];
-            setInterval(() => {
-                if(bottle.isColliding(endboss)) {
-                    endboss.hit(25);
-                    console.log('boss health', endboss.energy);
-                };
-            }, 2000); //StopInterval nach Hit einführen
-        }
+        });
+    }
 
-    };
+
+    hittingEndboss() {
+        let bottle = this.throwableObjects[0];
+        let endboss = this.level.enemies[15];
+        this.bottleCollidesWithEndboss(bottle, endboss)
+        this.resetIntervalAfterHit();
+    }
+
+    bottleCollidesWithEndboss(bottle, endboss) {
+        if (bottle.isColliding(endboss)) {
+            endboss.hit(25);
+            this.hit = true;
+            console.log('boss health', endboss.energy);
+        } else {
+            clearInterval(this.hittingBossInterval);
+        }
     
-    
+    }
+
+    resetIntervalAfterHit() {
+        if (this.hit == true) {
+            clearInterval(this.hittingBossInterval);
+            this.hit = false;
+        };
+    }
 
     draw() {
 
@@ -117,7 +138,7 @@ class World {
         requestAnimationFrame(function () {
             self.draw();
         });
-    };
+    }
 
     addObjectToMap(objects) {
         objects.forEach(o => {

@@ -56,32 +56,19 @@ class Endboss extends MovableObject {
     }
 
     animate() {
+        this.playInterval = setStoppableInterval(this.play.bind(this), 150);
+    }
 
+    play() {
         if (this.isDead()) {
-            this.deadInterval = setStoppableInterval(this.dead.bind(this), 150);
-            clearInterval(this.hurtInterval);
-        } else if (this.isHurt()) {
-            this.hurtInterval = setStoppableInterval(this.hurt.bind(this), 150);
-            clearInterval(this.attackInterval);
-        } else if (this.energy <= 100) {
-            this.attackInterval = setStoppableInterval(this.attack.bind(this), 150);
-            clearInterval(this.playInterval);
+            this.dead();
+        }else if (this.isHurt()) {
+           this.hurt();
+        }else if (this.energy <= 100) {
+            this.attack();
         } else {
-            this.playInterval = setStoppableInterval(this.play.bind(this), 150);
-        };
-        
-        /*setInterval(() => {
-
-            if (this.isDead()) {
-                this.playAnimation(this.dead_Images);
-            }else if (this.isHurt()) {
-                this.playAnimation(this.hurt_Images);
-            }else if (this.energy <= 100) {
-                this.playAnimation(this.attack_Images);
-            } else {
-                this.playAnimation(this.alert_Images);
-            }
-        }, 150);*/
+            this.alert();
+        }
     }
 
     dead() {
@@ -93,9 +80,7 @@ class Endboss extends MovableObject {
     }
 
     attack() {
-        if (this.energy <= 100) {
             this.playAnimation(this.attack_Images);
-        }
     }
 
     alert() {
