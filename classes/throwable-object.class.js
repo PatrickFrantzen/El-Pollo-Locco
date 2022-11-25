@@ -1,6 +1,5 @@
 class ThrowableObject extends MovableObject {
-    IntervalId;
-    IntervalIdsplash;
+    
     offset = {
         top: 5,
         left: 5,
@@ -37,7 +36,7 @@ class ThrowableObject extends MovableObject {
 
     throw() {
         this.speed_y = 30;
-        this.applyGravity();
+        this.setStoppableInterval(this.applyGravity(), (1000/25))
         
         this.IntervalId = setInterval( () => {
             if (this.isAboveGround()) {

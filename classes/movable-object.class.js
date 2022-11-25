@@ -1,5 +1,6 @@
 class MovableObject extends DrawableObject {
 
+    IntervalIdsplash;
     speed= 0.15;
     otherDirection = false;
     speed_y = 0;
@@ -14,15 +15,30 @@ class MovableObject extends DrawableObject {
         right: 0,
         bottom: 0
     };
+    intervalIds = [];
 
+    setStoppableInterval(fn, time) {
+        let id = setInterval(fn, time);
+        this.intervalIds.push(id);
+    };
+   
     applyGravity() {
+        if (this.isAboveGround() || this.speed_y > 0) {
+            this.y -= this.speed_y;
+            this.speed_y -= this.acceleration;
+        }
+        return false;
+    };
+
+   
+    /*applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speed_y > 0) {
                 this.y -= this.speed_y;
                 this.speed_y -= this.acceleration;    
             }
         },1000 / 25);
-    };
+    };*/
 
     isAboveGround() {
         if (this instanceof ThrowableObject) {
@@ -31,7 +47,6 @@ class MovableObject extends DrawableObject {
             return this.y < 180;
         };
     };
-
 
 
     playAnimation(images) {

@@ -56,7 +56,8 @@ class Character extends MovableObject {
         this.loadImages(this.Jumping_Images);
         this.loadImages(this.Hurt_Images);
         this.loadImages(this.Dead_Images);
-        this.applyGravity();
+        //this.applyGravity();
+        this.setStoppableInterval(this.applyGravity, (1000/25))
         this.animate();
     }
 
