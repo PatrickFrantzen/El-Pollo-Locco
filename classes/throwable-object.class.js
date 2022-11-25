@@ -36,18 +36,56 @@ class ThrowableObject extends MovableObject {
 
     throw() {
         this.speed_y = 30;
-        this.setStoppableInterval(this.applyGravity(), (1000/25))
+        this.applyGravity();
         
-        this.IntervalId = setInterval( () => {
-            if (this.isAboveGround()) {
-                this.x += 5;
-            } else {
-                this.splash(this.IntervalId);
-            } 
+        setStoppableInterval(this.moveOrSplash, 25);
+        setInterval( () => {
+            this.moveOrSplash();
         }, 25)
         setTimeout(() => {
             this.removeBottlefromArray();
         },3000);
+    }
+
+    moveOrSplash() {
+        if (this.isAboveGround()) {
+            this.x += 5;
+        } else {
+            this.splash();
+        } 
+    }
+
+    splash() {
+        this.stopSplash(intervalIds[0]);
+        setInterval(() => {
+            this.playAnimation(this.Splashing_Images);
+        }, 250);
+    }
+
+    stopSplash(x){
+        clearInterval(x);
+    }
+
+
+
+    /*throw() {
+        this.speed_y = 30;
+        this.applyGravity();
+        
+        this.IntervalId = setInterval( () => {
+            this.moveOrSplash();
+        }, 25)
+        setTimeout(() => {
+            this.removeBottlefromArray();
+        },3000);
+    }
+
+    moveOrSplash() {
+        if (this.isAboveGround()) {
+            this.x += 5;
+        } else {
+            this.splash(this.IntervalId);
+        } 
     }
 
     splash(x) {
@@ -59,7 +97,7 @@ class ThrowableObject extends MovableObject {
 
     stopSplash(x){
         clearInterval(x);
-    }
+    }*/
 
     removeBottlefromArray() {
         world.throwableObjects.splice(0,1);
