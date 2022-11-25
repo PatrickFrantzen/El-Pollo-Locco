@@ -14,7 +14,7 @@ class Chicken extends MovableObject {
         right: 5,
         bottom: 20
     };
-    
+
 
 
     constructor(imagePath, x) {
@@ -25,16 +25,20 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
-
+/**
+ * creates an interval for moving and animation of chicken and binds "this" keyword to the provided value, so it does not get lost when providing to the setStoppableInterval function
+ */
     animate() {
+        this.moveInterval = setStoppableInterval(this.move.bind(this), 1000 / 60);
+        this.playInterval = setStoppableInterval(this.play.bind(this), 100);
+    }
 
-        setInterval( () => {
-            this.moveLeft();
-        }, 1000 / 60);
 
-        setInterval(() => {
-            this.playAnimation(this.Walking_Images);
-        }, 100);
+    move() {
+        this.moveLeft();
+    }
 
+    play() {
+        this.playAnimation(this.Walking_Images);
     }
 }

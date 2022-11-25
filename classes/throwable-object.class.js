@@ -37,70 +37,40 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speed_y = 30;
         this.applyGravity();
-        
-        setStoppableInterval(this.moveOrSplash, 25);
-        setInterval( () => {
-            this.moveOrSplash();
-        }, 25)
+        this.moveInterval = setStoppableInterval(this.move.bind(this), 25);
+        this.playInterval = setStoppableInterval(this.play.bind(this), 250);
+
         setTimeout(() => {
             this.removeBottlefromArray();
         },3000);
-    }
+    };
 
-    moveOrSplash() {
+    move() {
         if (this.isAboveGround()) {
             this.x += 5;
+        };
+    };
+
+    play() {
+        if (this.isAboveGround()) {
+            this.rotate();
         } else {
             this.splash();
-        } 
+        };
     }
+
+    rotate() {
+        this.playAnimation(this.Throwing_Images);
+    };
 
     splash() {
-        this.stopSplash(intervalIds[0]);
-        setInterval(() => {
-            this.playAnimation(this.Splashing_Images);
-        }, 250);
-    }
-
-    stopSplash(x){
-        clearInterval(x);
-    }
-
-
-
-    /*throw() {
-        this.speed_y = 30;
-        this.applyGravity();
-        
-        this.IntervalId = setInterval( () => {
-            this.moveOrSplash();
-        }, 25)
-        setTimeout(() => {
-            this.removeBottlefromArray();
-        },3000);
-    }
-
-    moveOrSplash() {
-        if (this.isAboveGround()) {
-            this.x += 5;
-        } else {
-            this.splash(this.IntervalId);
-        } 
-    }
-
-    splash(x) {
-        this.stopSplash(x);
-        this.IntervalIdsplash = setInterval(() => {
-            this.playAnimation(this.Splashing_Images);
-        }, 250);
-    }
-
-    stopSplash(x){
-        clearInterval(x);
-    }*/
+            this.playAnimation(this.Splashing_Images); 
+    };
 
     removeBottlefromArray() {
         world.throwableObjects.splice(0,1);
+        clearInterval(this.moveInterval);
+        clearInterval(this.playInterval);
     }
     
 }

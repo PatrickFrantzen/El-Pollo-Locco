@@ -2,5 +2,13 @@ intervalIds = [];
 
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
-    this.intervalIds.push(id);
+    intervalIds.push(id);
+    return id;
 };
+
+function stopGame() {
+    for (let i = 1; i < 9999; i++) {
+        window.clearInterval(i);
+        
+    }
+}
