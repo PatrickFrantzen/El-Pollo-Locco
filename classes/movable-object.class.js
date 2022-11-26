@@ -65,6 +65,13 @@ class MovableObject extends DrawableObject {
         return timepassed < 1;
     };
 
+    isIdle() {
+        let idleTime = new Date().getTime() - lastAction;
+        idleTime = idleTime / 1000;
+        return idleTime;
+    };
+
+
     isDead() {
         return this.energy == 0;
     }
@@ -75,7 +82,6 @@ class MovableObject extends DrawableObject {
 
     moveLeft() {
         this.x -= this.speed;
-        
     };
 
     jump() {

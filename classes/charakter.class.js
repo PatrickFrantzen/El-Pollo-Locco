@@ -37,6 +37,31 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-57.png'
     ];
 
+    Idle_Images = [
+        'img/2_character_pepe/1_idle/idle/I-1.png',
+        'img/2_character_pepe/1_idle/idle/I-2.png',
+        'img/2_character_pepe/1_idle/idle/I-3.png',
+        'img/2_character_pepe/1_idle/idle/I-4.png',
+        'img/2_character_pepe/1_idle/idle/I-5.png',
+        'img/2_character_pepe/1_idle/idle/I-6.png',
+        'img/2_character_pepe/1_idle/idle/I-7.png',
+        'img/2_character_pepe/1_idle/idle/I-8.png',
+        'img/2_character_pepe/1_idle/idle/I-9.png',
+        'img/2_character_pepe/1_idle/idle/I-10.png',
+    ];
+
+    Long_Idle_Images = [
+        'img/2_character_pepe/1_idle/long_idle/I-11.png',
+        'img/2_character_pepe/1_idle/long_idle/I-12.png',
+        'img/2_character_pepe/1_idle/long_idle/I-13.png',
+        'img/2_character_pepe/1_idle/long_idle/I-14.png',
+        'img/2_character_pepe/1_idle/long_idle/I-15.png',
+        'img/2_character_pepe/1_idle/long_idle/I-16.png',
+        'img/2_character_pepe/1_idle/long_idle/I-17.png',
+        'img/2_character_pepe/1_idle/long_idle/I-18.png',
+        'img/2_character_pepe/1_idle/long_idle/I-19.png',
+        'img/2_character_pepe/1_idle/long_idle/I-20.png'
+    ];
 
     currentImage = 0;
     y = 180;
@@ -49,6 +74,8 @@ class Character extends MovableObject {
         right: 20,
         bottom: 0
     };
+    status_idle = false;
+    status_longIdle = false;
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -56,22 +83,29 @@ class Character extends MovableObject {
         this.loadImages(this.Jumping_Images);
         this.loadImages(this.Hurt_Images);
         this.loadImages(this.Dead_Images);
+        this.loadImages(this.Idle_Images);
+        this.loadImages(this.Long_Idle_Images);
         this.applyGravity();
         this.animate();
+        
     }
+
 
     animate() {
-
         setInterval(() => {
             this.walking();
-        }, 1000 / 60)
-
+        }, 1000 / 60); 
         setInterval(() => {
-            this.animations();
-            
+            this.animations(); 
         }, 70);
-
+        /*this.idleInterval = setStoppableInterval(this.idle.bind(this), 70);
+        this.longIdleInterval = setStoppableInterval(this.longIdle.bind(this), 70);*/
+        
+        /*setInterval(() => {
+            this.checkForIdle();
+        },70);*/
     }
+
 
     walking() {
         this.walking_sound.pause();
@@ -79,18 +113,15 @@ class Character extends MovableObject {
             this.moveRight();
             this.otherDirection = false;
             this.walking_sound.play();
-        }
-
+        };
         if (this.world.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
             this.otherDirection = true;
             this.walking_sound.play();
-        }
-
+        };
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
-            
-        }
+        };
         this.world.camera_x = -this.x + 100;
     }
 
@@ -101,10 +132,25 @@ class Character extends MovableObject {
             this.playAnimation(this.Hurt_Images);
         }else if (this.isAboveGround()) {
             this.playAnimation(this.Jumping_Images);
-        } else {
+        }else if (this.checkForIdle()) {
+        }else {
             if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.level_end_x) {
                 this.playAnimation(this.Walking_Images);
             }
         }
+    }
+
+    checkForIdle() {
+        if (this.isIdle() >= 2 && this.isIdle() <= 5) {
+            this.status_idle = true;
+            this.playAnimation(this.Idle_Images);
+        } else if (this.isIdle() >= 5) {
+            this.status_idle = false;
+            this.status_longIdle = true;
+            this.playAnimation(this.Long_Idle_Images);
+        } else {
+            this.status_idle = false;
+            this.status_longIdle = false;
+        }; //prüfen ob die variable status_idle noch gebraucht wird
     }
 }

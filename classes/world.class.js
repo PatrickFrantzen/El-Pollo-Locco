@@ -43,9 +43,6 @@ class World {
         }
     };
 
-
-
-
     checkCollisions() {
         this.collidingEnemyInterval = setStoppableInterval(this.collidingEnemy.bind(this), 3000);
         this.collidingEnemyFromAboveInterval = setStoppableInterval(this.collidingEnemyFromAbove.bind(this), 100);
@@ -101,8 +98,7 @@ class World {
             console.log('boss health', endboss.energy);
         } else {
             clearInterval(this.hittingBossInterval);
-        }
-    
+        };
     }
 
     resetIntervalAfterHit() {
