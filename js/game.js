@@ -6,6 +6,8 @@ let lastAction = 0
 
 
 function init() {
+    document.getElementById('game').classList.remove('game');
+    document.getElementById('startscreen').classList.add('d-none');
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 }

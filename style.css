@@ -1,7 +1,72 @@
+@font-face {
+    font-family: 'zabras';
+    src: url('fonts/zabars.ttf') format('trueType');
+}
+
 body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-image: url('img/5_background/desert-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
 }
 
+h1 {
+    font-size: 72px;
+    letter-spacing: 10px;
+    text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+canvas {
+    display: block;
+    z-index: 1;
+}
+
+.startscreen {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.startscreen img {
+    height: 50%;
+    width: 50%;
+}
+
+.game {
+    display: none;
+}
+
+.d-none {
+    display: none;
+}
+
+/* Smartphones --------------- */
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+    
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
+
+    .headline-game {
+        display: none;
+    }
+}

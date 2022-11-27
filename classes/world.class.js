@@ -92,7 +92,7 @@ class World {
     }
 
     bottleCollidesWithEndboss(bottle, endboss) {
-        if (bottle.isColliding(endboss)) {
+        if (bottle.isColliding(endboss) && endboss.energy > 0) {
             endboss.hit(25);
             this.hit = true;
             console.log('boss health', endboss.energy);
@@ -147,7 +147,7 @@ class World {
             this.flipImage(object);
         }
         object.draw(this.ctx);
-        object.drawFrame(this.ctx);
+        //object.drawFrame(this.ctx);
 
         if (object.otherDirection) {
             this.flipImageBack(object);

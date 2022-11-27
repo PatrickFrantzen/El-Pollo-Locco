@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,15 +28,28 @@
     <script src="levels/level1.js"></script>
     <script src="statusbars.js/statusbar_character.js"></script>
     <script src="js/game.js"></script>
-    
+
 </head>
-<body onload="init()">
 
-    <h1>El pollo Loco</h1>
-    
-    <canvas id="canvas" height="480" width="720">
+<body>
+    <div id="startscreen" class="startscreen">
+        <h1 class="headline-startscreen">El Pollo Loco</h1>
+        <img src="img/9_intro_outro_screens/start/startscreen_1.png">
+        <div class="button-position">
+            <button onclick="init()">Start</button>
+            <button>Settings</button>
+            <button>Help</button>
+        </div>
+    </div>
+    <div id="game" class="game">
+        <h1 class="headline-game">El Pollo Loco</h1>
 
-    </canvas>
+        <canvas id="canvas" height="480" width="720">
+
+        </canvas>
+    </div>
+
 
 </body>
+
 </html>

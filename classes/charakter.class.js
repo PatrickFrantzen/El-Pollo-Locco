@@ -74,8 +74,6 @@ class Character extends MovableObject {
         right: 20,
         bottom: 0
     };
-    status_idle = false;
-    status_longIdle = false;
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -98,12 +96,6 @@ class Character extends MovableObject {
         setInterval(() => {
             this.animations(); 
         }, 70);
-        /*this.idleInterval = setStoppableInterval(this.idle.bind(this), 70);
-        this.longIdleInterval = setStoppableInterval(this.longIdle.bind(this), 70);*/
-        
-        /*setInterval(() => {
-            this.checkForIdle();
-        },70);*/
     }
 
 
@@ -132,25 +124,18 @@ class Character extends MovableObject {
             this.playAnimation(this.Hurt_Images);
         }else if (this.isAboveGround()) {
             this.playAnimation(this.Jumping_Images);
-        }else if (this.checkForIdle()) {
+        }else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.level_end_x) {
+            this.playAnimation(this.Walking_Images);
         }else {
-            if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.level_end_x) {
-                this.playAnimation(this.Walking_Images);
-            }
+            this.checkForIdle()
         }
     }
 
     checkForIdle() {
-        if (this.isIdle() >= 2 && this.isIdle() <= 5) {
-            this.status_idle = true;
-            this.playAnimation(this.Idle_Images);
-        } else if (this.isIdle() >= 5) {
-            this.status_idle = false;
-            this.status_longIdle = true;
+        if (this.isIdle() >= 10 && this.isIdle() <= 15) {
+            this.playAnimation(this.Idle_Images); 
+        } else if (this.isIdle() >= 15) {
             this.playAnimation(this.Long_Idle_Images);
-        } else {
-            this.status_idle = false;
-            this.status_longIdle = false;
-        }; //prüfen ob die variable status_idle noch gebraucht wird
+        };
     }
 }
