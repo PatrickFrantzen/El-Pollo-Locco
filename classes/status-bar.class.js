@@ -5,9 +5,6 @@ class Statusbar extends DrawableObject{
     percentage = 100;
     world;
 
-
-    
-
     constructor(healthbar, coinbar, bottlebar) {
         super();
         this.healthbar = healthbar;

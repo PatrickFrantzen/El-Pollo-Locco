@@ -1,3 +1,4 @@
+let level1;
 backgroundnumberIsEven=true;
 let evenBackgrounds=['img/5_background/layers/air.png','img/5_background/layers/3_third_layer/2.png','img/5_background/layers/2_second_layer/2.png', 'img/5_background/layers/1_first_layer/2.png'];
 let oddBackgrounds = ['img/5_background/layers/air.png','img/5_background/layers/3_third_layer/1.png','img/5_background/layers/2_second_layer/1.png', 'img/5_background/layers/1_first_layer/1.png'];
@@ -21,13 +22,17 @@ let numberOfBottles = 7;
 
 
 
-const level1 = new Level(
-   createLevelEnemies(),
+
+
+function initLevel() {
+level1 = new Level(
    createLevelClouds(),
    createLevelBackground(),
    createLevelCoins(),
    createLevelBottles(),
+   createLevelEnemies(),
 );
+}
 
 
 function createLevelEnemies(){

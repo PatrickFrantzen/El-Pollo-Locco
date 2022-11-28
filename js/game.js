@@ -6,6 +6,7 @@ let lastAction = 0
 
 
 function init() {
+    initLevel();
     document.getElementById('game').classList.remove('game');
     document.getElementById('startscreen').classList.add('d-none');
     canvas = document.getElementById('canvas');
