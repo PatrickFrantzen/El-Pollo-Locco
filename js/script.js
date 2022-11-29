@@ -9,6 +9,5 @@ function setStoppableInterval(fn, time) {
 function stopGame() {
     for (let i = 1; i < 9999; i++) {
         window.clearInterval(i);
-        
     }
 }

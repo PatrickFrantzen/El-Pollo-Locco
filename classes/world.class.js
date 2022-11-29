@@ -78,24 +78,23 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if( this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
                 enemy.alive = false;
-                console.log('This enemy is dead', enemy);
             };
         });
     }
 
 
     hittingEndboss() {
-        let bottle = this.throwableObjects[0];
-        let endboss = this.level.enemies[15];
+        let bottle = this.throwableObjects;
+        let endbossPosition = this.level.enemies.length;
+        let endboss = this.level.enemies[endbossPosition -1];
         this.bottleCollidesWithEndboss(bottle, endboss)
         this.resetIntervalAfterHit();
     }
 
     bottleCollidesWithEndboss(bottle, endboss) {
-        if (bottle.isColliding(endboss) && endboss.energy > 0) {
+        if (bottle[0].isColliding(endboss) && endboss.energy > 0 && bottle.length > 0) {
             endboss.hit(25);
             this.hit = true;
-            console.log('boss health', endboss.energy);
         } else {
             clearInterval(this.hittingBossInterval);
         };

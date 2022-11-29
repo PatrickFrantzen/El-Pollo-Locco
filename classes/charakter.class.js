@@ -120,6 +120,8 @@ class Character extends MovableObject {
     animations() {
         if (this.isDead()) {
             this.playAnimation(this.Dead_Images);
+            stopGame();
+            document.getElementById('lost').classList.remove('d-none');
         }else if (this.isHurt()) {
             this.playAnimation(this.Hurt_Images);
         }else if (this.isAboveGround()) {

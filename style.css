@@ -46,9 +46,25 @@ canvas {
     width: 50%;
 }
 
+
+.outroscreen {
+    z-index: 2;
+    height: 480px;
+    width: 720px;
+}
+
 .game {
     display: none;
 }
+
+.game-container {
+    display: grid;
+}
+
+.canvas-game, .outroscreen{
+    grid-column: 1;
+    grid-row: 1;
+  }
 
 .d-none {
     display: none;

@@ -3,6 +3,7 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 55;
+    endbossCounter = 0;
 
     offset = {
         top: 0,
@@ -60,11 +61,15 @@ class Endboss extends MovableObject {
     }
 
     play() {
-        if (this.isDead()) {
+        if (this.isDead() && this.endbossCounter <= 14) {
             this.dead();
+        } else if (this.isDead() && this.endbossCounter > 14) {
+            this.deadEndscreen();
+            stopGame();
+            document.getElementById('won').classList.remove('d-none');
         }else if (this.isHurt()) {
            this.hurt();
-        }else if (this.energy <= 100) {
+        }else if (this.energy < 100) {
             this.attack();
         } else {
             this.alert();
@@ -72,7 +77,12 @@ class Endboss extends MovableObject {
     }
 
     dead() {
-        this.playAnimation(this.dead_Images);
+            this.playAnimation(this.dead_Images);
+            this.endbossCounter++;
+    }
+
+    deadEndscreen() {
+        this.loadImage(this.dead_Images[2]);
     }
 
     hurt() {
