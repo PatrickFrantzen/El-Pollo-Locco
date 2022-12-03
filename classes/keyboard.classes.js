@@ -16,6 +16,7 @@ class Keyboard {
             document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 this.LEFT = true;
+                console.log('is touched');
             });
     
             document.getElementById('btnLeft').addEventListener('touchend', (e) => {
