@@ -67,6 +67,7 @@ class Endboss extends MovableObject {
             this.deadEndscreen();
             stopGame();
             document.getElementById('won').classList.remove('d-none');
+            document.getElementById('won').classList.add('outroscreen');
         }else if (this.isHurt()) {
            this.hurt();
         }else if (this.energy < 100) {

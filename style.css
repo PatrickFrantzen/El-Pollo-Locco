@@ -24,6 +24,8 @@ h1 {
     display: flex;
     justify-content: center;
     text-align: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 canvas {
@@ -42,8 +44,8 @@ canvas {
 }
 
 .startscreen img {
-    height: 50%;
-    width: 50%;
+    height: 60%;
+    width: 60%;
 }
 
 
@@ -54,11 +56,19 @@ canvas {
 }
 
 .game {
-    display: none;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
 }
 
 .game-container {
     display: grid;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
 }
 
 .canvas-game, .outroscreen{
@@ -70,11 +80,28 @@ canvas {
     display: none;
 }
 
+.image-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Smartphones --------------- */
+@media only screen and (max-width: 1200px) {
+    .headline-game {
+        display: none;
+    }
+
+}
+
+
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
-    }
+        }
+
 }
     
 @media only screen and (max-height: 480px) {
@@ -82,7 +109,38 @@ canvas {
         height: 100vh;
     }
 
-    .headline-game {
-        display: none;
+    h1 {
+        font-size: 64px;
     }
+
+    .startscreen img {
+        width: 50%;
+        height: 50%;
+    }
+
+}
+
+@media only screen and (max-height: 360px) and (max-width: 740px) {
+    canvas {
+        height: 100vh;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 64px;
+    }
+
+    .startscreen img {
+        width: 50%;
+        height: 50%;
+    }
+
+    .outroscreen {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
 }

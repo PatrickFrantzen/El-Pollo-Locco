@@ -122,6 +122,7 @@ class Character extends MovableObject {
             this.playAnimation(this.Dead_Images);
             stopGame();
             document.getElementById('lost').classList.remove('d-none');
+            document.getElementById('lost').classList.add('outroscreen');
         }else if (this.isHurt()) {
             this.playAnimation(this.Hurt_Images);
         }else if (this.isAboveGround()) {
