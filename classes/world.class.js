@@ -64,9 +64,9 @@ class World {
         };
     }
 
-    collidingEnemy(){
+    collidingEnemy() {
         this.level.enemies.forEach((enemy) => {
-            if( this.character.isColliding(enemy) && enemy.alive == true) {
+            if (this.character.isColliding(enemy) && enemy.alive == true) {
                 this.character.hit(5);
                 this.statusbars.healthbar.setPercentage(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES);
             };
@@ -76,7 +76,7 @@ class World {
 
     collidingEnemyFromAbove() {
         this.level.enemies.forEach((enemy) => {
-            if( this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
                 enemy.alive = false;
                 playSound(enemy.chicken_sound);
                 setTimeout(() => {
@@ -88,23 +88,35 @@ class World {
 
 
     hittingEndboss() {
-        let bottle = this.throwableObjects;
-        let endboss = this.level.endboss[0];
-        if (endboss.energy >= 0) {
+        this.throwableObjects.forEach((bottle) => {
+            let endboss = this.level.endboss[0];
+            let throwableBottle = this.throwableObjects;
+            if (endboss.isColliding(bottle) && throwableBottle.length > 0 && endboss.energy >= 0) {
+                endboss.hit(25);
+                this.hit = true;
+                console.log('is colliding');
+            } else {
+                clearInterval(this.hittingBossInterval);
+            }
+            this.resetIntervalAfterHit();
+        })
+
+
+        /*if (endboss.energy >= 0) {
             this.bottleCollidesWithEndboss(bottle, endboss) 
         };
-        this.resetIntervalAfterHit();
+        this.resetIntervalAfterHit();*/
     }
 
-    bottleCollidesWithEndboss(bottle, endboss) {
+    /*bottleCollidesWithEndboss(bottle, endboss) {
         if (bottle[0].isColliding(endboss) && bottle.length > 0) {
             endboss.hit(25);
             this.hit = true;
-            console.log('hit is now true', this.hit)
+            bottle[0].hit = true;
         } else {
             clearInterval(this.hittingBossInterval);
         };
-    }
+    }*/
 
     resetIntervalAfterHit() {
         if (this.hit == true) {

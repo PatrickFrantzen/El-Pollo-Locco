@@ -6,6 +6,7 @@ class ThrowableObject extends MovableObject {
         right: 5,
         bottom: 5
     };
+    hit = false;
 
     Throwing_Images = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -55,7 +56,7 @@ class ThrowableObject extends MovableObject {
     };
 
     play() {
-        if (this.isAboveGround()) {
+        if (this.isAboveGround() && !this.hit) {
             this.rotate();
         } else {
             this.splash();
@@ -71,7 +72,7 @@ class ThrowableObject extends MovableObject {
     };
 
     splashSound() {
-        world.character.shattering_sound.play(); 
+        world.character.shattering_sound.play();
     }
 
     removeBottlefromArray() {
