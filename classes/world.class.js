@@ -78,6 +78,10 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if( this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
                 enemy.alive = false;
+                enemy.chicken_sound.play();
+                setTimeout(() => {
+                    this.removeChickenFromArray(enemy);
+                }, 1000);
             };
         });
     }
@@ -105,6 +109,11 @@ class World {
             clearInterval(this.hittingBossInterval);
             this.hit = false;
         };
+    }
+
+    removeChickenFromArray(enemy) {
+        let index = this.level.enemies.indexOf(enemy);
+        this.level.enemies.splice(index, 1);
     }
 
     draw() {

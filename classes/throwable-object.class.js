@@ -1,5 +1,5 @@
 class ThrowableObject extends MovableObject {
-    
+
     offset = {
         top: 5,
         left: 5,
@@ -37,12 +37,15 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speed_y = 30;
         this.applyGravity();
+        world.character.throwing_sound.play();
         this.moveInterval = setStoppableInterval(this.move.bind(this), 25);
         this.playInterval = setStoppableInterval(this.play.bind(this), 250);
-
+        setTimeout(() => {
+            this.splashSound();
+        }, 1000);
         setTimeout(() => {
             this.removeBottlefromArray();
-        },3000);
+        }, 2000);
     };
 
     move() {
@@ -64,13 +67,18 @@ class ThrowableObject extends MovableObject {
     };
 
     splash() {
-            this.playAnimation(this.Splashing_Images); 
+        this.playAnimation(this.Splashing_Images);
     };
 
+    splashSound() {
+        world.character.shattering_sound.play(); 
+    }
+
     removeBottlefromArray() {
-        world.throwableObjects.splice(0,1);
+        world.throwableObjects.splice(0, 1);
         clearInterval(this.moveInterval);
         clearInterval(this.playInterval);
     }
-    
+
+
 }

@@ -4,6 +4,7 @@ class Chicken extends MovableObject {
     width = 50;
     energy = 25;
     alive = true;
+    chicken_sound = new Audio('audio/chicken.mp3')
     Walking_Images = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -45,6 +46,7 @@ class Chicken extends MovableObject {
             this.deadChicken();
             clearInterval(this.playInterval);
             clearInterval(this.moveInterval);
+
         };
     }
 
@@ -59,5 +61,7 @@ class Chicken extends MovableObject {
     play() {
         this.playAnimation(this.Walking_Images);
     }
+
+
 
 }

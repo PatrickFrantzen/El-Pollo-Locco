@@ -68,6 +68,9 @@ class Character extends MovableObject {
     world;
     speed = 4;
     walking_sound = new Audio('audio/running.mp3');
+    throwing_sound = new Audio('audio/throwing.mp3');
+    shattering_sound =new Audio('audio/broken_glass.mp3');
+
     offset = {
         top: 120,
         left: 20,
