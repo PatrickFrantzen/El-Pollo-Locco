@@ -11,6 +11,7 @@ class Endboss extends MovableObject {
         right: 0,
         bottom: 0
     };
+    angry_chicken = new Audio ('audio/angry_chicken.mp3');
 
     alert_Images = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -57,7 +58,7 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        this.playInterval = setStoppableInterval(this.play.bind(this), 150);
+        this.playInterval = setStoppableInterval(this.play.bind(this), 125);
     }
 
     play() {
@@ -65,11 +66,9 @@ class Endboss extends MovableObject {
             this.dead();
         } else if (this.isDead() && this.endbossCounter > 14) {
             this.deadEndscreen();
-            stopGame();
-            document.getElementById('won').classList.remove('d-none');
-            document.getElementById('won').classList.add('outroscreen');
         }else if (this.isHurt()) {
-           this.hurt();
+            this.hurt();
+            this.angry_chicken.play();
         }else if (this.energy < 100) {
             this.attack();
         } else {
@@ -84,6 +83,9 @@ class Endboss extends MovableObject {
 
     deadEndscreen() {
         this.loadImage(this.dead_Images[2]);
+        stopGame();
+        document.getElementById('won').classList.remove('d-none');
+        document.getElementById('won').classList.add('outroscreen');
     }
 
     hurt() {

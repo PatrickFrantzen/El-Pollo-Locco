@@ -91,12 +91,14 @@ class World {
         let bottle = this.throwableObjects;
         let endbossPosition = this.level.enemies.length;
         let endboss = this.level.enemies[endbossPosition -1];
-        this.bottleCollidesWithEndboss(bottle, endboss)
+        if (endboss.energy > 0) {
+            this.bottleCollidesWithEndboss(bottle, endboss) 
+        };
         this.resetIntervalAfterHit();
     }
 
     bottleCollidesWithEndboss(bottle, endboss) {
-        if (bottle[0].isColliding(endboss) && endboss.energy > 0 && bottle.length > 0) {
+        if (bottle[0].isColliding(endboss) && bottle.length > 0) {
             endboss.hit(25);
             this.hit = true;
         } else {

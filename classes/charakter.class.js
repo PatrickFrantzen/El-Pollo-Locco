@@ -70,6 +70,7 @@ class Character extends MovableObject {
     walking_sound = new Audio('audio/running.mp3');
     throwing_sound = new Audio('audio/throwing.mp3');
     shattering_sound =new Audio('audio/broken_glass.mp3');
+    pain_sound = new Audio('audio/pain.mp3')
 
     offset = {
         top: 120,
@@ -128,6 +129,7 @@ class Character extends MovableObject {
             document.getElementById('lost').classList.add('outroscreen');
         }else if (this.isHurt()) {
             this.playAnimation(this.Hurt_Images);
+            this.pain_sound.play();
         }else if (this.isAboveGround()) {
             this.playAnimation(this.Jumping_Images);
         }else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.level_end_x) {

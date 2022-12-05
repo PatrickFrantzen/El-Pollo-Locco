@@ -4,7 +4,6 @@ let canvasheight = 480;
 let keyboard = new Keyboard();
 let lastAction = 0;
 
-
 function init() {
     initLevel();
     document.getElementById('game').classList.remove('d-none');
