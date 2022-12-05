@@ -11,3 +11,17 @@ function stopGame() {
         window.clearInterval(i);
     }
 }
+
+function playSound(sound) {
+    sound.play();
+}
+
+function lostOutroscreen() {
+    document.getElementById('lost').classList.remove('d-none');
+    document.getElementById('lost').classList.add('outroscreen');
+}
+
+function winOutroscreen() {
+    document.getElementById('won').classList.remove('d-none');
+    document.getElementById('won').classList.add('outroscreen');
+}

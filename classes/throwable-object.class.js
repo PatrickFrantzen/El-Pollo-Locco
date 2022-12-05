@@ -37,7 +37,7 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speed_y = 30;
         this.applyGravity();
-        world.character.throwing_sound.play();
+        playSound(world.character.throwing_sound);
         this.moveInterval = setStoppableInterval(this.move.bind(this), 25);
         this.playInterval = setStoppableInterval(this.play.bind(this), 250);
         setTimeout(() => {

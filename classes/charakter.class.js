@@ -70,7 +70,8 @@ class Character extends MovableObject {
     walking_sound = new Audio('audio/running.mp3');
     throwing_sound = new Audio('audio/throwing.mp3');
     shattering_sound =new Audio('audio/broken_glass.mp3');
-    pain_sound = new Audio('audio/pain.mp3')
+    pain_sound = new Audio('audio/pain.mp3');
+    jumping_sound = new Audio('audio/jumping.mp3');
 
     offset = {
         top: 120,
@@ -106,17 +107,14 @@ class Character extends MovableObject {
     walking() {
         this.walking_sound.pause();
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-            this.moveRight();
-            this.otherDirection = false;
-            this.walking_sound.play();
+            this.movingRight();
         };
         if (this.world.keyboard.LEFT && this.x > 0) {
-            this.moveLeft();
-            this.otherDirection = true;
-            this.walking_sound.play();
+            this.movingLeft();
         };
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
+            playSound(this.jumping_sound);
         };
         this.world.camera_x = -this.x + 100;
     }
@@ -125,11 +123,10 @@ class Character extends MovableObject {
         if (this.isDead()) {
             this.playAnimation(this.Dead_Images);
             stopGame();
-            document.getElementById('lost').classList.remove('d-none');
-            document.getElementById('lost').classList.add('outroscreen');
+            lostOutroscreen();
         }else if (this.isHurt()) {
             this.playAnimation(this.Hurt_Images);
-            this.pain_sound.play();
+            playSound(this.pain_sound);
         }else if (this.isAboveGround()) {
             this.playAnimation(this.Jumping_Images);
         }else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.level_end_x) {
@@ -144,6 +141,22 @@ class Character extends MovableObject {
             this.playAnimation(this.Idle_Images); 
         } else if (this.isIdle() >= 15) {
             this.playAnimation(this.Long_Idle_Images);
+        };
+    }
+
+    movingRight() {
+        this.moveRight();
+        this.otherDirection = false;
+        if (!this.isAboveGround()) {
+            this.walking_sound.play();
+        };
+    }
+
+    movingLeft() {
+        this.moveLeft();
+        this.otherDirection = true;
+        if (!this.isAboveGround()) {
+            this.walking_sound.play();
         };
     }
 }

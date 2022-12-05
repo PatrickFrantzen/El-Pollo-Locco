@@ -17,7 +17,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.run()
+        this.run();
     }
 
     setWorld() {
@@ -60,7 +60,7 @@ class World {
             };
         });
         if (this.throw == true) {
-            this.hittingBossInterval = setStoppableInterval(this.hittingEndboss.bind(this), 1500);
+            this.hittingBossInterval = setStoppableInterval(this.hittingEndboss.bind(this), 1000);
         };
     }
 
@@ -78,7 +78,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if( this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
                 enemy.alive = false;
-                enemy.chicken_sound.play();
+                playSound(enemy.chicken_sound);
                 setTimeout(() => {
                     this.removeChickenFromArray(enemy);
                 }, 1000);
@@ -89,9 +89,8 @@ class World {
 
     hittingEndboss() {
         let bottle = this.throwableObjects;
-        let endbossPosition = this.level.enemies.length;
-        let endboss = this.level.enemies[endbossPosition -1];
-        if (endboss.energy > 0) {
+        let endboss = this.level.endboss[0];
+        if (endboss.energy >= 0) {
             this.bottleCollidesWithEndboss(bottle, endboss) 
         };
         this.resetIntervalAfterHit();
@@ -101,6 +100,7 @@ class World {
         if (bottle[0].isColliding(endboss) && bottle.length > 0) {
             endboss.hit(25);
             this.hit = true;
+            console.log('hit is now true', this.hit)
         } else {
             clearInterval(this.hittingBossInterval);
         };
@@ -134,6 +134,7 @@ class World {
         this.addObjectToMap(this.level.coins);
         this.addObjectToMap(this.level.bottles);
         this.addObjectToMap(this.level.enemies);
+        this.addObjectToMap(this.level.endboss);
         this.addObjectToMap(this.throwableObjects);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
@@ -157,7 +158,7 @@ class World {
             this.flipImage(object);
         }
         object.draw(this.ctx);
-        //object.drawFrame(this.ctx);
+        object.drawFrame(this.ctx); // auskommentieren wenn kein Rahmen mehr gezogen werden soll
 
         if (object.otherDirection) {
             this.flipImageBack(object);

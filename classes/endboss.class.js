@@ -68,7 +68,7 @@ class Endboss extends MovableObject {
             this.deadEndscreen();
         }else if (this.isHurt()) {
             this.hurt();
-            this.angry_chicken.play();
+            playSound(this.angry_chicken);
         }else if (this.energy < 100) {
             this.attack();
         } else {
@@ -84,8 +84,7 @@ class Endboss extends MovableObject {
     deadEndscreen() {
         this.loadImage(this.dead_Images[2]);
         stopGame();
-        document.getElementById('won').classList.remove('d-none');
-        document.getElementById('won').classList.add('outroscreen');
+        winOutroscreen();
     }
 
     hurt() {

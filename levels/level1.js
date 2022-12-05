@@ -2,6 +2,7 @@ backgroundnumberIsEven=true;
 let evenBackgrounds=['img/5_background/layers/air.png','img/5_background/layers/3_third_layer/2.png','img/5_background/layers/2_second_layer/2.png', 'img/5_background/layers/1_first_layer/2.png'];
 let oddBackgrounds = ['img/5_background/layers/air.png','img/5_background/layers/3_third_layer/1.png','img/5_background/layers/2_second_layer/1.png', 'img/5_background/layers/1_first_layer/1.png'];
 let enemies = [];
+let endboss = [];
 let clouds = [];
 let background = [];
 let coins = [];
@@ -24,6 +25,7 @@ let level1;
 function initLevel() {
 level1 = new Level(
    createLevelEnemies(),
+   createLevelEndboss(),
    createLevelClouds(),
    createLevelBackground(),
    createLevelCoins(),
@@ -31,6 +33,10 @@ level1 = new Level(
 );
 }
 
+function createLevelEndboss(){
+    endboss.push(new Endboss());
+    return endboss;
+}
 
 function createLevelEnemies(){
     for (let i = 0; i < numberOfEnemies; i++) {
@@ -38,7 +44,6 @@ function createLevelEnemies(){
         enemies.push(chicken);
         enemiePosition_x = enemiePosition_x + Math.random() * 550;
     }
-    enemies.push(new Endboss());
     return enemies;
 }
 

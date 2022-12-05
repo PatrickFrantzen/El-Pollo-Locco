@@ -61,7 +61,4 @@ class Chicken extends MovableObject {
     play() {
         this.playAnimation(this.Walking_Images);
     }
-
-
-
 }

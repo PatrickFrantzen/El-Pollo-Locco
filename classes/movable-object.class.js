@@ -1,7 +1,6 @@
 class MovableObject extends DrawableObject {
 
-    IntervalIdsplash;
-    speed= 0.15;
+    speed = 0.15;
     otherDirection = false;
     speed_y = 0;
     acceleration = 1.75;
@@ -16,19 +15,22 @@ class MovableObject extends DrawableObject {
         bottom: 0
     };
 
-   
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speed_y > 0) {
                 this.y -= this.speed_y;
-                this.speed_y -= this.acceleration;    
+                this.speed_y -= this.acceleration;
             }
-        },1000 / 40);
+        }, 1000 / 40);
     };
 
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return this.y < 360; //Ändern das es auf dem Boden auftritt und zerspringt
+        } else if (this instanceof ThrowableObject && this.world.hit == true) {
+            console.log('Boss hit');
+            return this.y < 90;
         } else {
             return this.y < 180;
         };
@@ -42,12 +44,12 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     };
 
-    
+
     isColliding(obj) {
-        return  (this.x + this.width - this.offset.right) > obj.x + obj.offset.left && 
-                this.x + this.offset.left < (obj.x + obj.width - obj.offset.right) && 
-                (this.y + this.height - this.offset.bottom) > obj.y + obj.offset.top &&
-                (this.y + this.offset.top) < (obj.y + obj.height - obj.offset.bottom);
+        return (this.x + this.width - this.offset.right) > obj.x + obj.offset.left &&
+            this.x + this.offset.left < (obj.x + obj.width - obj.offset.right) &&
+            (this.y + this.height - this.offset.bottom) > obj.y + obj.offset.top &&
+            (this.y + this.offset.top) < (obj.y + obj.height - obj.offset.bottom);
     }
 
     hit(lostEnergy) {
@@ -89,13 +91,13 @@ class MovableObject extends DrawableObject {
     };
 
     collectCoins(obj) {
-            this.amountOfCoins = this.amountOfCoins + 1;
-            let index = this.world.level.coins.indexOf(obj);
-            this.world.level.coins.splice(index, 1); 
+        this.amountOfCoins = this.amountOfCoins + 1;
+        let index = this.world.level.coins.indexOf(obj);
+        this.world.level.coins.splice(index, 1);
     };
 
     collectBottles(obj) {
-        this.amountOfBottles = this.amountOfBottles +1;
+        this.amountOfBottles = this.amountOfBottles + 1;
         let index = this.world.level.bottles.indexOf(obj);
         this.world.level.bottles.splice(index, 1);
     }
