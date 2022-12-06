@@ -17,20 +17,21 @@ class MovableObject extends DrawableObject {
 
 
     applyGravity() {
-        setInterval(() => {
+        this.gravityInterval = setStoppableInterval(this.gravity.bind(this), 1000/40);
+    }
+
+    
+    
+    gravity() {
             if (this.isAboveGround() || this.speed_y > 0) {
                 this.y -= this.speed_y;
                 this.speed_y -= this.acceleration;
             }
-        }, 1000 / 40);
     };
 
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return this.y < 360; //Ändern das es auf dem Boden auftritt und zerspringt
-        } else if (this instanceof ThrowableObject && this.world.hit == true) {
-            console.log('Boss hit');
-            return this.y < 90;
         } else {
             return this.y < 180;
         };

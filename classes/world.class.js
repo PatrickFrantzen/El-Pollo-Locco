@@ -8,7 +8,7 @@ class World {
     statusbars = CharakterStatusbars;
     throwableObjects = [];
     throw = false;
-    hit = false;
+    bosshit = false;
 
 
     constructor(canvas, keyboard) {
@@ -60,13 +60,13 @@ class World {
             };
         });
         if (this.throw == true) {
-            this.hittingBossInterval = setStoppableInterval(this.hittingEndboss.bind(this), 1000);
+            this.hittingBossInterval = setStoppableInterval(this.hittingEndboss.bind(this), 1);
         };
     }
 
-    collidingEnemy() {
+    collidingEnemy(){
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && enemy.alive == true) {
+            if( this.character.isColliding(enemy) && enemy.alive == true) {
                 this.character.hit(5);
                 this.statusbars.healthbar.setPercentage(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES);
             };
@@ -76,7 +76,7 @@ class World {
 
     collidingEnemyFromAbove() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
+            if( this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
                 enemy.alive = false;
                 playSound(enemy.chicken_sound);
                 setTimeout(() => {
@@ -88,17 +88,22 @@ class World {
 
 
     hittingEndboss() {
-        this.throwableObjects.forEach((bottle) => {
+    this.throwableObjects.forEach((bottle) => {
             let endboss = this.level.endboss[0];
             let throwableBottle = this.throwableObjects;
             if (endboss.isColliding(bottle) && throwableBottle.length > 0 && endboss.energy >= 0) {
                 endboss.hit(25);
-                this.hit = true;
+                this.bosshit = true;
+                throwableBottle[0].hit = true;
+                clearInterval(throwableBottle[0].moveInterval);
+                clearInterval(throwableBottle[0].playInterval);
+                clearInterval(throwableBottle[0].gravityInterval);
+                throwableBottle[0].play();
                 console.log('is colliding');
             } else {
                 clearInterval(this.hittingBossInterval);
             }
-            this.resetIntervalAfterHit();
+            this.resetIntervalAfterHit(throwableBottle);
         })
 
 
@@ -118,10 +123,11 @@ class World {
         };
     }*/
 
-    resetIntervalAfterHit() {
-        if (this.hit == true) {
+    resetIntervalAfterHit(throwableBottle) {
+        if (this.bosshit == true) {
             clearInterval(this.hittingBossInterval);
-            this.hit = false;
+            this.bosshit = false;
+            throwableBottle[0].hit = false;
         };
     }
 

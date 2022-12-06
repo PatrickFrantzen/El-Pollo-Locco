@@ -1,10 +1,10 @@
 class ThrowableObject extends MovableObject {
 
     offset = {
-        top: 5,
-        left: 5,
-        right: 5,
-        bottom: 5
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
     };
     hit = false;
 
@@ -56,7 +56,9 @@ class ThrowableObject extends MovableObject {
     };
 
     play() {
-        if (this.isAboveGround() && !this.hit) {
+        if (this.isAboveGround && this.hit == true) {
+            this.splash();
+        }else if (this.isAboveGround) {
             this.rotate();
         } else {
             this.splash();
