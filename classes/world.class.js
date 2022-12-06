@@ -18,6 +18,8 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        //this.damageboss()
+        //this.test();
     }
 
     setWorld() {
@@ -26,10 +28,15 @@ class World {
 
     run() {
         setInterval(() => {
-            this.checkCollisions();
             this.checkThrowObjects();
         }, 200);
+        this.collidingEnemyInterval = setStoppableInterval(this.collidingEnemy.bind(this), 3000);
+        this.collidingEnemyFromAboveInterval = setStoppableInterval(this.collidingEnemyFromAbove.bind(this), 100);
+        this.checkingForHittingBossInterval = setStoppableInterval(this.checkingForHittingEndboss.bind(this), 1000);
+        this.collidingCoinInterval = setStoppableInterval(this.collidingCoin.bind(this), 1);
+        this.collidingBottleInterval = setStoppableInterval(this.collidingBottle.bind(this), 1);
     };
+
 
     checkThrowObjects() {
         if (this.keyboard.D && this.character.amountOfBottles >= 1) {
@@ -43,40 +50,36 @@ class World {
         }
     };
 
-    checkCollisions() {
-        this.collidingEnemyInterval = setStoppableInterval(this.collidingEnemy.bind(this), 3000);
-        this.collidingEnemyFromAboveInterval = setStoppableInterval(this.collidingEnemyFromAbove.bind(this), 100);
-
+    collidingCoin() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 this.character.collectCoins(coin);
                 this.character.updateCoinbar();
             };
         });
+    }
+
+    collidingBottle() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.character.collectBottles(bottle);
                 this.character.updateBottlebar();
             };
         });
-        if (this.throw == true) {
-            this.hittingBossInterval = setStoppableInterval(this.hittingEndboss.bind(this), 1);
-        };
     }
 
-    collidingEnemy(){
+    collidingEnemy() {
         this.level.enemies.forEach((enemy) => {
-            if( this.character.isColliding(enemy) && enemy.alive == true) {
+            if (this.character.isColliding(enemy) && enemy.alive == true) {
                 this.character.hit(5);
                 this.statusbars.healthbar.setPercentage(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES);
             };
-            clearInterval(this.collidingEnemyInterval);
         });
     }
 
     collidingEnemyFromAbove() {
         this.level.enemies.forEach((enemy) => {
-            if( this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
                 enemy.alive = false;
                 playSound(enemy.chicken_sound);
                 setTimeout(() => {
@@ -86,49 +89,19 @@ class World {
         });
     }
 
-
-    hittingEndboss() {
-    this.throwableObjects.forEach((bottle) => {
-            let endboss = this.level.endboss[0];
-            let throwableBottle = this.throwableObjects;
-            if (endboss.isColliding(bottle) && throwableBottle.length > 0 && endboss.energy >= 0) {
+    checkingForHittingEndboss() {
+        let endboss = this.level.endboss[0];
+        let throwableBottle = this.throwableObjects;
+        this.throwableObjects.forEach((bottle) => {
+            if (endboss.isColliding(bottle)&& !throwableBottle[0].hit) {
                 endboss.hit(25);
-                this.bosshit = true;
-                throwableBottle[0].hit = true;
                 clearInterval(throwableBottle[0].moveInterval);
                 clearInterval(throwableBottle[0].playInterval);
                 clearInterval(throwableBottle[0].gravityInterval);
-                throwableBottle[0].play();
+                throwableBottle.splice(0, 1);
                 console.log('is colliding');
-            } else {
-                clearInterval(this.hittingBossInterval);
             }
-            this.resetIntervalAfterHit(throwableBottle);
-        })
-
-
-        /*if (endboss.energy >= 0) {
-            this.bottleCollidesWithEndboss(bottle, endboss) 
-        };
-        this.resetIntervalAfterHit();*/
-    }
-
-    /*bottleCollidesWithEndboss(bottle, endboss) {
-        if (bottle[0].isColliding(endboss) && bottle.length > 0) {
-            endboss.hit(25);
-            this.hit = true;
-            bottle[0].hit = true;
-        } else {
-            clearInterval(this.hittingBossInterval);
-        };
-    }*/
-
-    resetIntervalAfterHit(throwableBottle) {
-        if (this.bosshit == true) {
-            clearInterval(this.hittingBossInterval);
-            this.bosshit = false;
-            throwableBottle[0].hit = false;
-        };
+    });
     }
 
     removeChickenFromArray(enemy) {
