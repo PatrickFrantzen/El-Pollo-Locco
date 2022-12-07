@@ -1,4 +1,5 @@
 class World {
+    debugmodus = false;
     character = new Character();
     level = level1;
     canvas;
@@ -26,27 +27,23 @@ class World {
     }
 
     run() {
-        setInterval(() => {
-            this.checkThrowObjects();
-        }, 200);
-        this.collidingEnemyInterval = setStoppableInterval(this.collidingEnemy.bind(this), 3000);
-        this.collidingEnemyFromAboveInterval = setStoppableInterval(this.collidingEnemyFromAbove.bind(this), 100);
-        this.checkingForHittingBossInterval = setStoppableInterval(this.checkingForHittingEndboss.bind(this), 1000);
+
+        this.checkThrowObjectsInterval = setStoppableInterval(this.checkThrowObjects.bind(this), 200);
+        this.collidingEnemyInterval = setStoppableInterval(this.collidingEnemy.bind(this), 100);
+        this.collidingEnemyFromAboveInterval = setStoppableInterval(this.collidingEnemyFromAbove.bind(this), 1);
+        this.checkingForHittingBossInterval = setStoppableInterval(this.checkingForHittingEndboss.bind(this), 800);
         this.collidingCoinInterval = setStoppableInterval(this.collidingCoin.bind(this), 1);
         this.collidingBottleInterval = setStoppableInterval(this.collidingBottle.bind(this), 1);
     };
 
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.character.amountOfBottles >= 1) {
+        if (this.keyboard.D && this.character.amountOfBottles >= 1 && !this.character.otherDirection) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
-            this.throw = true;
             this.character.amountOfBottles = this.character.amountOfBottles - 1;
             this.character.updateBottlebar();
-        } else {
-            this.throw = false;
-        }
+        } 
     };
 
     collidingCoin() {
@@ -149,8 +146,10 @@ class World {
             this.flipImage(object);
         }
         object.draw(this.ctx);
-        object.drawFrame(this.ctx); // auskommentieren wenn kein Rahmen mehr gezogen werden soll
-
+        if (this.debugmodus) {
+            object.drawFrame(this.ctx); // auskommentieren wenn kein Rahmen mehr gezogen werden soll
+        }
+        
         if (object.otherDirection) {
             this.flipImageBack(object);
         }

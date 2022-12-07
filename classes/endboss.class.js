@@ -55,11 +55,13 @@ class Endboss extends MovableObject {
         this.loadImages(this.hurt_Images);
         this.loadImages(this.dead_Images);
         this.x = 3000;
+        this.speed = 5;
         this.animate();
     }
 
     animate() {
         this.playInterval = setStoppableInterval(this.play.bind(this), 125);
+        
     }
 
     play() {
@@ -72,6 +74,7 @@ class Endboss extends MovableObject {
             playSound(this.angry_chicken);
         }else if (this.energy < 100) {
             this.attack();
+            this.move();
         } else {
             this.alert();
         }
@@ -98,5 +101,9 @@ class Endboss extends MovableObject {
 
     alert() {
         this.playAnimation(this.alert_Images);
+    }
+
+    move() {
+        this.moveLeft();
     }
 }
