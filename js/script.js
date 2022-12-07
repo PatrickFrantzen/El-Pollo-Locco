@@ -16,6 +16,10 @@ function playSound(sound) {
     sound.play();
 }
 
+function pauseSound(sound) {
+    sound.pause();
+}
+
 function lostOutroscreen() {
     document.getElementById('lost').classList.remove('d-none');
     document.getElementById('lost').classList.add('outroscreen');

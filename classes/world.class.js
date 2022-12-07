@@ -9,6 +9,7 @@ class World {
     throwableObjects = [];
     throw = false;
     bosshit = false;
+    shattering_sound =new Audio('audio/broken_glass.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -18,8 +19,6 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        //this.damageboss()
-        //this.test();
     }
 
     setWorld() {
@@ -93,8 +92,9 @@ class World {
         let endboss = this.level.endboss[0];
         let throwableBottle = this.throwableObjects;
         this.throwableObjects.forEach((bottle) => {
-            if (endboss.isColliding(bottle)&& !throwableBottle[0].hit) {
+            if (endboss.isColliding(bottle)) {
                 endboss.hit(25);
+                this.shattering_sound.play();
                 clearInterval(throwableBottle[0].moveInterval);
                 clearInterval(throwableBottle[0].playInterval);
                 clearInterval(throwableBottle[0].gravityInterval);

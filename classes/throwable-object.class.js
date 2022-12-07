@@ -7,9 +7,8 @@ class ThrowableObject extends MovableObject {
         bottom: 0
     };
     hit = false;
-    movingPixels = 5;
-    maximumPixels = 30;
-    x = 0;
+    splashSoundCounter = 0;
+    splashSound = false;
 
     Throwing_Images = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -44,35 +43,28 @@ class ThrowableObject extends MovableObject {
         playSound(world.character.throwing_sound);
         this.moveInterval = setStoppableInterval(this.move.bind(this), 25);
         this.playInterval = setStoppableInterval(this.play.bind(this), 250);
-        setTimeout(() => {
-            this.splashSound();
-        }, 1000);
+        this.soundInterval = setStoppableInterval(this.sound.bind(this), 1);
+        
         setTimeout(() => {
             this.removeBottlefromArray();
         }, 2000);
     };
 
+
+
     move() {
         if (this.isAboveGround()) {
             this.x += 5;
-        } else {
-            this.cancelMove();
-        }
+        } 
     }
 
-    cancelMove() {
-        if (this.hit == true && this.x == this.maximumPixels) {
-            clearInterval(this.moveInterval)
-        }
-    }
 
    play() {
-        if (this.isAboveGround() && this.hit == true) {
-            this.splash();
-        }else if (this.isAboveGround()) {
+        if (this.isAboveGround()) {
             this.rotate();
         } else {
             this.splash();
+            
         };
     }
 
@@ -82,16 +74,35 @@ class ThrowableObject extends MovableObject {
 
     splash() {
         this.playAnimation(this.Splashing_Images);
+        this.splashSound = true;
+        
+        console.log(this.splashSoundCounter)
     };
 
-    splashSound() {
-        world.character.shattering_sound.play();
+    sound() {
+        if (this.splashSound == true && this.splashSoundCounter == 0) {
+            this.splashingSound();
+            this.splashSoundCounter++;
+        }
+        if (this.splashSoundCounter > 0) {
+            clearInterval(this.soundInterval);
+            this.splashSoundCounter = 0;
+            this.splashSound = false;
+        }
+  
+    }
+
+    splashingSound() {
+        playSound(world.shattering_sound);
+        
     }
 
     removeBottlefromArray() {
+        
         world.throwableObjects.splice(0, 1);
         clearInterval(this.moveInterval);
         clearInterval(this.playInterval);
+        
     }
 
 
