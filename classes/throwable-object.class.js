@@ -64,7 +64,6 @@ class ThrowableObject extends MovableObject {
             this.rotate();
         } else {
             this.splash();
-            
         };
     }
 
@@ -75,8 +74,6 @@ class ThrowableObject extends MovableObject {
     splash() {
         this.playAnimation(this.Splashing_Images);
         this.splashSound = true;
-        
-        console.log(this.splashSoundCounter)
     };
 
     sound() {
@@ -94,11 +91,9 @@ class ThrowableObject extends MovableObject {
 
     splashingSound() {
         playSound(world.shattering_sound);
-        
     }
 
     removeBottlefromArray() {
-        
         world.throwableObjects.splice(0, 1);
         clearInterval(this.moveInterval);
         clearInterval(this.playInterval);
