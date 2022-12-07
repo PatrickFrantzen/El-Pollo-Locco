@@ -35,9 +35,8 @@
         <h1 class="headline-startscreen">El Pollo Loco</h1>
         <img src="img/9_intro_outro_screens/start/startscreen_1.png">
         <div class="button-position">
-            <button onclick="init()">Start</button>
-            <button>Settings</button>
-            <button>Help</button>
+            <button class="intro-buttons" onclick="init()">Start</button>
+            <button class="intro-buttons" onclick="openHelpDialog()">Help</button>
         </div>
     </div>
 
@@ -47,7 +46,7 @@
         <div class="game-container">
             <canvas class="canvas-game" id="canvas" height="480" width="720"></canvas>
 
-            <div class="button-container d-none" id="button-container">
+            <div class="lower-button-container d-none" id="button-container">
                 <div class="button-container-left">
                     <button class="button" id="btnLeft"><img class="icon" src="img/10_icons/left.png"></button>
                     <button class="button" id="btnRight"><img class="icon" src="img/10_icons/right.png"></button>
@@ -63,10 +62,25 @@
             <img id="won" class="d-none img-size" src="img/9_intro_outro_screens/game_over/game over!.png">
             <img id="lost" class="d-none img-size" src="img/9_intro_outro_screens/game_over/you lost.png">
         </div>
-
     </div>
 
-
+    <div id="help-display-overlay" class="help-display-overlay d-none">
+        <div id="help-display" class="help-display">
+            <div class="help-display-head">
+                <div class="help-display-headline">How to play El Pollo Loco</div><button onclick="closeHelpDialog()" class="help-button">X</button>
+            </div>
+            <div class="help-display-body">
+                <p>You can control Pepe with your arrow-keys on your keyboard.</p>
+                <p>While walking through the dessert of Mexico, you can pick up Coins and Salsabottles.</p>
+                <p>Attention: The chickens of Mexico do not like you! If they touch you, you will get hurt.</p>
+                <p>To avoid any damage, you can jump over the small chickens using SPACE-key.</p>
+                <p>Please note, Any key is not available. Pun intended...</p>
+                <p>If you jump on them, please enjoy your meal.</p>
+                <p>At the end of your journey, El Pollo Loco awaits you. To defeat her, you can use your bottles.</p>
+                <p>Press "D" to throw bottles at her. But be careful, you do not have infinite amounts of bottles.</p>
+            </div>
+        </div>
+    </div>
 
 
 </body>

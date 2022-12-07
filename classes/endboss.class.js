@@ -5,6 +5,7 @@ class Endboss extends MovableObject {
     y = 55;
     x = 3000;
     endbossCounter = 0;
+    alive = true;
 
     offset = {
         top: 0,
@@ -12,7 +13,7 @@ class Endboss extends MovableObject {
         right: 0,
         bottom: 0
     };
-    angry_chicken = new Audio ('audio/angry_chicken.mp3');
+    
 
     alert_Images = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -71,7 +72,6 @@ class Endboss extends MovableObject {
             this.deadEndscreen();
         }else if (this.isHurt()) {
             this.hurt();
-            playSound(this.angry_chicken);
         }else if (this.energy < 100) {
             this.attack();
             this.move();
@@ -83,6 +83,7 @@ class Endboss extends MovableObject {
     dead() {
             this.playAnimation(this.dead_Images);
             this.endbossCounter++;
+            this.alive = false;
     }
 
     deadEndscreen() {

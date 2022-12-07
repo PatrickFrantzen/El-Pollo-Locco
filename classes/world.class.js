@@ -10,7 +10,14 @@ class World {
     throwableObjects = [];
     throw = false;
     bosshit = false;
-    shattering_sound =new Audio('audio/broken_glass.mp3');
+
+    shattering_sound = new Audio('audio/broken_glass.mp3');
+    pain_sound = new Audio('audio/pain.mp3');
+    chicken_sound = new Audio('audio/chicken.mp3')
+    angry_chicken = new Audio('audio/angry_chicken.mp3');
+    throwing_sound = new Audio('audio/throwing.mp3');
+    walking_sound = new Audio('audio/running.mp3');
+    jumping_sound = new Audio('audio/jumping.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -30,20 +37,30 @@ class World {
 
         this.checkThrowObjectsInterval = setStoppableInterval(this.checkThrowObjects.bind(this), 200);
         this.collidingEnemyInterval = setStoppableInterval(this.collidingEnemy.bind(this), 100);
+        this.collidingEndbossInterval = setStoppableInterval(this.collidingEndboss.bind(this), 100);
         this.collidingEnemyFromAboveInterval = setStoppableInterval(this.collidingEnemyFromAbove.bind(this), 1);
         this.checkingForHittingBossInterval = setStoppableInterval(this.checkingForHittingEndboss.bind(this), 800);
         this.collidingCoinInterval = setStoppableInterval(this.collidingCoin.bind(this), 1);
         this.collidingBottleInterval = setStoppableInterval(this.collidingBottle.bind(this), 1);
+        this.muteInterval = setStoppableInterval(this.mute.bind(this), 1);
     };
 
+    mute() {
+        if (mute) {
+            music.forEach(sound => {
+                muteSound(sound);
+            });
+        }
+    }
 
     checkThrowObjects() {
         if (this.keyboard.D && this.character.amountOfBottles >= 1 && !this.character.otherDirection) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, 30);
             this.throwableObjects.push(bottle);
             this.character.amountOfBottles = this.character.amountOfBottles - 1;
             this.character.updateBottlebar();
-        } 
+            playSound(this.throwing_sound);
+        }
     };
 
     collidingCoin() {
@@ -69,6 +86,17 @@ class World {
             if (this.character.isColliding(enemy) && enemy.alive == true) {
                 this.character.hit(5);
                 this.statusbars.healthbar.setPercentage(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES);
+                playSound(this.pain_sound);
+            };
+        });
+    }
+
+    collidingEndboss() {
+        this.level.endboss.forEach((endboss) => {
+            if (this.character.isColliding(endboss) && endboss.alive == true) {
+                this.character.hit(25);
+                this.statusbars.healthbar.setPercentage(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES);
+                playSound(this.pain_sound);
             };
         });
     }
@@ -77,7 +105,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
                 enemy.alive = false;
-                playSound(enemy.chicken_sound);
+                playSound(this.chicken_sound);
                 setTimeout(() => {
                     this.removeChickenFromArray(enemy);
                 }, 1000);
@@ -91,14 +119,19 @@ class World {
         this.throwableObjects.forEach((bottle) => {
             if (endboss.isColliding(bottle)) {
                 endboss.hit(25);
-                this.shattering_sound.play();
+                this.playSoundsForHittingEndboss();
                 clearInterval(throwableBottle[0].moveInterval);
                 clearInterval(throwableBottle[0].playInterval);
                 clearInterval(throwableBottle[0].gravityInterval);
                 throwableBottle.splice(0, 1);
                 console.log('is colliding');
             }
-    });
+        });
+    }
+
+    playSoundsForHittingEndboss() {
+        playSound(this.shattering_sound);
+        playSound(this.angry_chicken);
     }
 
     removeChickenFromArray(enemy) {
@@ -149,7 +182,7 @@ class World {
         if (this.debugmodus) {
             object.drawFrame(this.ctx); // auskommentieren wenn kein Rahmen mehr gezogen werden soll
         }
-        
+
         if (object.otherDirection) {
             this.flipImageBack(object);
         }

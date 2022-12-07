@@ -1,4 +1,6 @@
 intervalIds = [];
+music = [];
+mute = false;
 
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
@@ -13,12 +15,13 @@ function stopGame() {
 }
 
 function playSound(sound) {
-    sound.play();
+    if (mute) {
+        sound.muted = true;
+    } else {
+        sound.play();
+    }
 }
 
-function pauseSound(sound) {
-    sound.pause();
-}
 
 function lostOutroscreen() {
     document.getElementById('lost').classList.remove('d-none');
@@ -28,4 +31,12 @@ function lostOutroscreen() {
 function winOutroscreen() {
     document.getElementById('won').classList.remove('d-none');
     document.getElementById('won').classList.add('outroscreen');
+}
+
+function closeHelpDialog() {
+    document.getElementById('help-display-overlay').classList.add('d-none');
+}
+
+function openHelpDialog() {
+    document.getElementById('help-display-overlay').classList.remove('d-none');
 }

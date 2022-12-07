@@ -26,7 +26,7 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ]
 
-    constructor(x, y) {
+    constructor(x, y, speed_y) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.Throwing_Images);
         this.loadImages(this.Splashing_Images);
@@ -34,23 +34,23 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 60;
         this.width = 50;
+        this.speed_y = speed_y;
         this.throw();
     }
 
     throw() {
-        this.speed_y = 30;
         this.applyGravity();
-        playSound(world.character.throwing_sound);
-        this.moveInterval = setStoppableInterval(this.move.bind(this), 25);
-        this.playInterval = setStoppableInterval(this.play.bind(this), 250);
-        this.soundInterval = setStoppableInterval(this.sound.bind(this), 1);
-        
+        this.setIntervalsforThrowing();
         setTimeout(() => {
             this.removeBottlefromArray();
         }, 2000);
     };
 
-
+    setIntervalsforThrowing() {
+        this.moveInterval = setStoppableInterval(this.move.bind(this), 25);
+        this.playInterval = setStoppableInterval(this.play.bind(this), 250);
+        this.soundInterval = setStoppableInterval(this.sound.bind(this), 1);
+    }
 
     move() {
         if (this.isAboveGround()) {
