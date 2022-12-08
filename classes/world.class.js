@@ -10,6 +10,7 @@ class World {
     throwableObjects = [];
     throw = false;
     bosshit = false;
+    mute_activated = false;
 
     shattering_sound = new Audio('audio/broken_glass.mp3');
     pain_sound = new Audio('audio/pain.mp3');
@@ -18,6 +19,7 @@ class World {
     throwing_sound = new Audio('audio/throwing.mp3');
     walking_sound = new Audio('audio/running.mp3');
     jumping_sound = new Audio('audio/jumping.mp3');
+    western_sound = new Audio('audio/western_theme.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -27,31 +29,30 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.backgroundMusic();
     }
 
     setWorld() {
         this.character.world = this;
     }
 
-    run() {
+    backgroundMusic() {
+            this.western_sound.loop = true;
+            playSound(this.western_sound);
+    }
 
+    run() {
         this.checkThrowObjectsInterval = setStoppableInterval(this.checkThrowObjects.bind(this), 200);
         this.collidingEnemyInterval = setStoppableInterval(this.collidingEnemy.bind(this), 100);
-        this.collidingEndbossInterval = setStoppableInterval(this.collidingEndboss.bind(this), 100);
+        this.collidingEndbossInterval = setStoppableInterval(this.collidingEndboss.bind(this), 300);
         this.collidingEnemyFromAboveInterval = setStoppableInterval(this.collidingEnemyFromAbove.bind(this), 1);
-        this.checkingForHittingBossInterval = setStoppableInterval(this.checkingForHittingEndboss.bind(this), 800);
+        this.checkingForHittingBossInterval = setStoppableInterval(this.checkingForHittingEndboss.bind(this), 100);
         this.collidingCoinInterval = setStoppableInterval(this.collidingCoin.bind(this), 1);
         this.collidingBottleInterval = setStoppableInterval(this.collidingBottle.bind(this), 1);
-        this.muteInterval = setStoppableInterval(this.mute.bind(this), 1);
+        this.backgroundMusicInterval = setStoppableInterval(this.checkIfMuteIsActive.bind(this), 1);
     };
 
-    mute() {
-        if (mute) {
-            music.forEach(sound => {
-                muteSound(sound);
-            });
-        }
-    }
+
 
     checkThrowObjects() {
         if (this.keyboard.D && this.character.amountOfBottles >= 1 && !this.character.otherDirection) {
@@ -124,7 +125,6 @@ class World {
                 clearInterval(throwableBottle[0].playInterval);
                 clearInterval(throwableBottle[0].gravityInterval);
                 throwableBottle.splice(0, 1);
-                console.log('is colliding');
             }
         });
     }
@@ -137,6 +137,14 @@ class World {
     removeChickenFromArray(enemy) {
         let index = this.level.enemies.indexOf(enemy);
         this.level.enemies.splice(index, 1);
+    }
+
+    checkIfMuteIsActive() {
+        if (mute) {
+            this.western_sound.muted = true;
+        } else {
+            this.western_sound.muted = false;
+        }
     }
 
     draw() {

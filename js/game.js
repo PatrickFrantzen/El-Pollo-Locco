@@ -3,6 +3,10 @@ let world;
 let canvasheight = 480;
 let keyboard = new Keyboard();
 let lastAction = 0;
+let lastThrow = 0;
+let throwRequest = 0;
+let firstThrow = false;
+
 
 function init() {
     initLevel();
@@ -12,6 +16,10 @@ function init() {
     world = new World(canvas, keyboard);
     checkMobileDevice();
     //stopGame();
+}
+
+function restart() {
+    location.reload();
 }
 
 function checkMobileDevice() {
@@ -68,6 +76,18 @@ function activateMobileButtons() {
         lastAction = new Date().getTime();
     });
 
+    document.getElementById('btnVolume').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        muteGame();
+    });
+
+
+    document.getElementById('btnMute').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        muteGame();
+    });
+
+
 }
 
 window.addEventListener('keydown', (event) => {
@@ -87,7 +107,7 @@ window.addEventListener('keydown', (event) => {
         keyboard.SPACE = true;
     }
     if (event.keyCode == 68) {
-        keyboard.D = true;
+            keyboard.D = true;
     }
 });
 
