@@ -39,40 +39,37 @@
         </div>
     </div>
 
-    <div id="game" class="game d-none">
-        <h1 class="headline-game">El Pollo Loco</h1>
+    <div id="win" class="d-none">
+        <button class="button restart " id="restart" onclick="restart()">Restart</button>
+        <img class="img-size" src="img/9_intro_outro_screens/game_over/game over!.png">
+    </div>
 
-        <div class="upper-button-container">
-            <div class="volume-container">
-                <button class="button" id="btnVolume"><img class="icon" src="img/10_icons/audio.png"
-                        onclick="muteGame()"></button>
-                <button class="button d-none" id="btnMute"><img class="icon" src="img/10_icons/mute.png"
-                        onclick="muteGame()"></button>
-            </div>
-        </div>
-
-        <div class="game-container">
-            <canvas class="canvas-game" id="canvas" height="480" width="720"></canvas>
-
-            <div class="lower-button-container d-none" id="button-container">
-                <div class="button-container-left">
-                    <button class="button" id="btnLeft"><img class="icon" src="img/10_icons/left.png"></button>
-                    <button class="button" id="btnRight"><img class="icon" src="img/10_icons/right.png"></button>
-                </div>
-                <div class="button-container-right">
-                    <button class="button" id="btnJump"><img class="icon" src="img/10_icons/jump.png"> </button>
-                    <button class="button" id="btnThrow"><img class="icon" src="img/10_icons/throw.png"></button>
-                </div>
-            </div>
+    <div id="lost" class="d-none">
+        <button class="button restart " id="restart" onclick="restart()">Restart</button>
+        <img class="img-size" src="img/9_intro_outro_screens/game_over/you lost.png">
+    </div>
+    
+    <div class="upper-button-container">
+        <div class="volume-container">
+            <button class="button d-none" id="btnVolume"><img class="icon" src="img/10_icons/audio.png"
+                    onclick="muteGame(), pauseIntro()"></button>
+            <button class="button" id="btnMute"><img class="icon" src="img/10_icons/mute.png"
+                    onclick="muteGame(), playIntro();"></button>
         </div>
     </div>
 
-    <div class="image-container d-none" id="image-container">
-        <div>
-            <img id="won" class=" d-none img-size" src="img/9_intro_outro_screens/game_over/game over!.png">
-            <img id="lost" class="d-none img-size" src="img/9_intro_outro_screens/game_over/you lost.png">
+    <canvas class="canvas-game d-none" id="canvas" height="480" width="720"></canvas>
+
+
+    <div class="lower-button-container d-none" id="button-container">
+        <div class="button-container-left">
+            <button class="button" id="btnLeft"><img class="icon" src="img/10_icons/left.png"></button>
+            <button class="button" id="btnRight"><img class="icon" src="img/10_icons/right.png"></button>
         </div>
-        <button class="button restart d-none" id="restart" onclick="restart()">Restart</button>
+        <div class="button-container-right">
+            <button class="button" id="btnJump"><img class="icon" src="img/10_icons/jump.png"> </button>
+            <button class="button" id="btnThrow"><img class="icon" src="img/10_icons/throw.png"></button>
+        </div>
     </div>
 
     <div id="help-display-overlay" class="help-display-overlay d-none">

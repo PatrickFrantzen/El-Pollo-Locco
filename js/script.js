@@ -1,6 +1,8 @@
 intervalIds = [];
 music = [];
-mute = false;
+mute = true;
+startscreen = true;
+let intro = new Audio('audio/western_theme.mp3');
 
 
 function setStoppableInterval(fn, time) {
@@ -28,8 +30,15 @@ function muteGame() {
     };
 }
 
+function playIntro() {
+        intro.play();
+}
 
-function playSound(sound) {
+function pauseIntro() {
+        intro.pause();
+}
+        
+    function playSound(sound) {
     if (mute) {
         sound.muted = true;
     } else {
@@ -41,16 +50,16 @@ function playSound(sound) {
 
 function lostOutroscreen() {
     document.getElementById('lost').classList.remove('d-none');
-    document.getElementById('image-container').classList.remove('d-none');
-    document.getElementById('lost').classList.add('outroscreen');
+    document.getElementById('lost').classList.add('d-flex');
     document.getElementById('restart').classList.remove('d-none');
+    document.getElementById('game').classList.add('d-none');
 }
 
 function winOutroscreen() {
-    document.getElementById('won').classList.remove('d-none');
-    document.getElementById('image-container').classList.remove('d-none');
-    document.getElementById('won').classList.add('outroscreen');
+    document.getElementById('win').classList.remove('d-none');
+    document.getElementById('win').classList.add('d-flex');
     document.getElementById('restart').classList.remove('d-none');
+    document.getElementById('game').classList.add('d-none');
 }
 
 function closeHelpDialog() {
