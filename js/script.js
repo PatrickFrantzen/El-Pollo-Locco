@@ -49,17 +49,17 @@ function pauseIntro() {
 
 
 function lostOutroscreen() {
+    document.getElementById('canvas').classList.add('d-none');
     document.getElementById('lost').classList.remove('d-none');
     document.getElementById('lost').classList.add('d-flex');
     document.getElementById('restart').classList.remove('d-none');
-    document.getElementById('game').classList.add('d-none');
 }
 
 function winOutroscreen() {
+    document.getElementById('canvas').classList.add('d-none');
     document.getElementById('win').classList.remove('d-none');
     document.getElementById('win').classList.add('d-flex');
     document.getElementById('restart').classList.remove('d-none');
-    document.getElementById('game').classList.add('d-none');
 }
 
 function closeHelpDialog() {

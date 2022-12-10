@@ -133,8 +133,8 @@ canvas {
 }
 
 .img-size {
-    width: 720px;
-    height: 480px;
+    width: 100vw;
+    height: 100vh;
 }
 
 /*unspecific styles */

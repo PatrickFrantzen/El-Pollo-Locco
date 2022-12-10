@@ -44,6 +44,11 @@ function createLevelEnemies(){
         enemies.push(chicken);
         enemiePosition_x = enemiePosition_x + Math.random() * 550;
     }
+    for (let i = 0; i < numberOfEnemies; i++) {
+        let smallchicken = new SmallChicken('img/3_enemies_chicken/chicken_small/1_walk/1_w.png', enemiePosition_x);
+        enemies.push(smallchicken);
+        enemiePosition_x = enemiePosition_x + Math.random() * 550;
+    }
     return enemies;
 }
 
