@@ -2,14 +2,16 @@ class Statusbar extends DrawableObject{
     healthbar;
     coinbar;
     bottlebar;
+    boss_healthbar;
     percentage = 100;
     world;
 
-    constructor(healthbar, coinbar, bottlebar) {
+    constructor(healthbar, coinbar, bottlebar, boss_healthbar) {
         super();
         this.healthbar = healthbar;
         this.coinbar = coinbar;
         this.bottlebar = bottlebar;
+        this.boss_healthbar = boss_healthbar;
         
     }
 

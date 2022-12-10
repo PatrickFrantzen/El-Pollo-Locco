@@ -120,6 +120,7 @@ class World {
         this.throwableObjects.forEach((bottle) => {
             if (endboss.isColliding(bottle)) {
                 endboss.hit(25);
+                this.statusbars.boss_healthbar.setPercentage(endboss.energy, this.statusbars.boss_healthbar.HEALTH_IMAGES);
                 this.playSoundsForHittingEndboss();
                 clearInterval(throwableBottle[0].moveInterval);
                 clearInterval(throwableBottle[0].playInterval);
@@ -158,6 +159,7 @@ class World {
         this.addToMap(this.statusbars.healthbar);
         this.addToMap(this.statusbars.coinbar);
         this.addToMap(this.statusbars.bottlebar);
+        this.addToMap(this.statusbars.boss_healthbar);
         this.ctx.translate(this.camera_x, 0);
         //translate wieder an die Ausgangsposition -> Ergebnis: Die Statusbar bewegt sich mit
         this.addObjectToMap(this.level.coins);
