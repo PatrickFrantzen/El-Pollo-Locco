@@ -40,14 +40,15 @@ function createLevelEndboss(){
 
 function createLevelEnemies(){
     for (let i = 0; i < numberOfEnemies; i++) {
-        let chicken = new Chicken('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png', enemiePosition_x);
-        enemies.push(chicken);
-        enemiePosition_x = enemiePosition_x + Math.random() * 550;
-    }
-    for (let i = 0; i < numberOfEnemies; i++) {
-        let smallchicken = new SmallChicken('img/3_enemies_chicken/chicken_small/1_walk/1_w.png', enemiePosition_x);
-        enemies.push(smallchicken);
-        enemiePosition_x = enemiePosition_x + Math.random() * 550;
+        if (i % 2 == 0) {
+            let chicken = new Chicken('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png', enemiePosition_x);
+            enemies.push(chicken);
+            enemiePosition_x = enemiePosition_x + Math.random() * 550; 
+        } else {
+            let smallchicken = new SmallChicken('img/3_enemies_chicken/chicken_small/1_walk/1_w.png', enemiePosition_x);
+            enemies.push(smallchicken);
+            enemiePosition_x = enemiePosition_x + Math.random() * 550;
+        };
     }
     return enemies;
 }

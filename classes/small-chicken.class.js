@@ -1,9 +1,6 @@
 class SmallChicken extends Chicken {
-    y = 350;
-    height = 75;
-    width = 50;
-    energy = 25;
-    alive = true;
+
+    jumpanimation = false;
     
     Walking_Images = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -15,21 +12,14 @@ class SmallChicken extends Chicken {
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
 
-    offset = {
-        top: 25,
-        left: -5,
-        right: -5,
-        bottom: 20
-    };
-
-
-
     constructor(imagePath, x) {
         super().loadImage(imagePath)
         this.loadImages(this.Walking_Images);
         this.x = x + Math.random() * 500; // Math.random = zufällige Zahl zwischen 0 und 1, mulitpliziert mit 500 ergibt ein Wert zwischen 200 und 700
         this.speed = 0.15 + Math.random() * 0.25;
+        this.applyGravity();
         this.animate();
+        
     }
 
 /**
@@ -39,6 +29,7 @@ class SmallChicken extends Chicken {
         this.moveInterval = setStoppableInterval(this.move.bind(this), 1000 / 60);
         this.playInterval = setStoppableInterval(this.play.bind(this), 100);
         this.deadInterval = setStoppableInterval(this.dead.bind(this), 100);
+        this.jumpInterval = setStoppableInterval(this.smallChickenJump.bind(this), setSmallChickenIntervalTime());
     }
 
     dead() {
@@ -46,7 +37,7 @@ class SmallChicken extends Chicken {
             this.deadChicken();
             clearInterval(this.playInterval);
             clearInterval(this.moveInterval);
-
+            clearInterval(this.jumpInterval);
         };
     }
 
@@ -60,5 +51,11 @@ class SmallChicken extends Chicken {
 
     play() {
         this.playAnimation(this.Walking_Images);
+    }
+
+    smallChickenJump() {
+        if (!this.isAboveGround()) {
+            this.jump()
+        }        
     }
 }

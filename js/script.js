@@ -4,12 +4,28 @@ mute = true;
 startscreen = true;
 let intro = new Audio('audio/western_theme.mp3');
 
+/*Random generated Intervaltime Variabledeclaration */
+
+let smallChickenJumpingIntervalTime;
+
+/*Functions for Intervals */
 
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
     intervalIds.push(id);
     return id;
 };
+
+function setSmallChickenIntervalTime() {
+    smallChickenJumpingIntervalTime = 1500 * (Math.random() + 0.75 );
+    if (smallChickenJumpingIntervalTime < 1500) {
+        smallChickenJumpingIntervalTime = 1500;
+    } console.log(smallChickenJumpingIntervalTime);
+    
+    /*if (smallChickenJumpingIntervalTime > 2000)
+        smallChickenJumpingIntervalTime = 2000;*/
+    return smallChickenJumpingIntervalTime;
+}
 
 function stopGame() {
     world.western_sound.muted = true;

@@ -32,10 +32,12 @@ class MovableObject extends DrawableObject {
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return this.y < 360; //Ändern das es auf dem Boden auftritt und zerspringt
-        } else {
+        } else if (this instanceof SmallChicken){
+            return this.y < 350;
+        }else {
             return this.y < 180;
         };
-    };
+    }
 
 
     playAnimation(images) {
