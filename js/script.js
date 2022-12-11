@@ -17,15 +17,14 @@ function setStoppableInterval(fn, time) {
 };
 
 function setSmallChickenIntervalTime() {
-    smallChickenJumpingIntervalTime = 1500 * (Math.random() + 0.75 );
+    smallChickenJumpingIntervalTime = 1500 * (Math.random() + 0.75);
     if (smallChickenJumpingIntervalTime < 1500) {
         smallChickenJumpingIntervalTime = 1500;
-    } console.log(smallChickenJumpingIntervalTime);
-    
-    /*if (smallChickenJumpingIntervalTime > 2000)
-        smallChickenJumpingIntervalTime = 2000;*/
+    }
     return smallChickenJumpingIntervalTime;
 }
+
+/*General Game Functions */
 
 function stopGame() {
     world.western_sound.muted = true;
@@ -46,15 +45,16 @@ function muteGame() {
     };
 }
 
+/* Music Functions */ 
 function playIntro() {
-        intro.play();
+    intro.play();
 }
 
 function pauseIntro() {
-        intro.pause();
+    intro.pause();
 }
-        
-    function playSound(sound) {
+
+function playSound(sound) {
     if (mute) {
         sound.muted = true;
     } else {
@@ -63,6 +63,7 @@ function pauseIntro() {
     }
 }
 
+/*Display Functions */ 
 
 function lostOutroscreen() {
     document.getElementById('canvas').classList.add('d-none');
