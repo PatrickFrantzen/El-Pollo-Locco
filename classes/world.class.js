@@ -104,7 +104,7 @@ class World {
 
     collidingEnemyFromAbove() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt() && enemy.alive == true) {
                 enemy.alive = false;
                 playSound(this.chicken_sound);
                 setTimeout(() => {

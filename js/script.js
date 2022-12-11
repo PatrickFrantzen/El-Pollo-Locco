@@ -6,7 +6,7 @@ let intro = new Audio('audio/western_theme.mp3');
 
 /*Random generated Intervaltime Variabledeclaration */
 
-let smallChickenJumpingIntervalTime;
+//let smallChickenJumpingIntervalTime;
 
 /*Functions for Intervals */
 
@@ -16,13 +16,9 @@ function setStoppableInterval(fn, time) {
     return id;
 };
 
-function setSmallChickenIntervalTime() {
-    smallChickenJumpingIntervalTime = 1500 * (Math.random() + 0.75);
-    if (smallChickenJumpingIntervalTime < 1500) {
-        smallChickenJumpingIntervalTime = 1500;
-    }
-    return smallChickenJumpingIntervalTime;
-}
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+  }
 
 /*General Game Functions */
 
