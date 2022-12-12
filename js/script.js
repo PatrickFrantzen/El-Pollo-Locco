@@ -1,12 +1,8 @@
-intervalIds = [];
-music = [];
-mute = true;
-startscreen = true;
+let intervalIds = [];
+let music = [];
+let mute = true;
 let intro = new Audio('audio/western_theme.mp3');
 
-/*Random generated Intervaltime Variabledeclaration */
-
-//let smallChickenJumpingIntervalTime;
 
 /*Functions for Intervals */
 
@@ -29,17 +25,15 @@ function stopGame() {
     }
 }
 
-function muteGame() {
-    if (!mute) {
-        mute = true;
-        document.getElementById('btnVolume').classList.add('d-none');
-        document.getElementById('btnMute').classList.remove('d-none');
-    } else {
-        mute = false;
-        document.getElementById('btnVolume').classList.remove('d-none');
-        document.getElementById('btnMute').classList.add('d-none');
-    };
+function addClassList(id, style) {
+    document.getElementById(id).classList.add(style);
 }
+
+function removeClassList(id, style) {
+    document.getElementById(id).classList.remove(style);
+}
+
+
 
 /* Music Functions */ 
 function playIntro() {
@@ -59,28 +53,40 @@ function playSound(sound) {
     }
 }
 
+function muteGame() {
+    if (!mute) {
+        mute = true;
+        addClassList('btnVolume', 'd-none');
+        removeClassList('btnMute', 'd-none');
+    } else {
+        mute = false;
+        removeClassList('btnVolume', 'd-none');
+        addClassList('btnMute', 'd-none');
+    };
+}
+
 /*Display Functions */ 
 
 function lostOutroscreen() {
-    document.getElementById('canvas').classList.add('d-none');
-    document.getElementById('lost').classList.remove('d-none');
-    document.getElementById('lost').classList.add('d-flex');
-    document.getElementById('restart').classList.remove('d-none');
-    document.getElementById('button-container').classList.add('d-none');
+    addClassList('canvas', 'd-none');
+    addClassList('button-container', 'd-none')
+    addClassList('lost', 'd-flex');
+    removeClassList('restart', 'd-none');
+    removeClassList('lost', 'd-none');
 }
 
 function winOutroscreen() {
-    document.getElementById('canvas').classList.add('d-none');
-    document.getElementById('win').classList.remove('d-none');
-    document.getElementById('win').classList.add('d-flex');
-    document.getElementById('restart').classList.remove('d-none');
-    document.getElementById('button-container').classList.add('d-none');
+    addClassList('canvas', 'd-none');
+    addClassList('button-container', 'd-none')
+    addClassList('win', 'd-flex');
+    removeClassList('restart', 'd-none');
+    removeClassList('win', 'd-none');
 }
 
 function closeHelpDialog() {
-    document.getElementById('help-display-overlay').classList.add('d-none');
+    addClassList('help-display-overlay', 'd-none');
 }
 
 function openHelpDialog() {
-    document.getElementById('help-display-overlay').classList.remove('d-none');
+    removeClassList('help-display-overlay', 'd-none');
 }

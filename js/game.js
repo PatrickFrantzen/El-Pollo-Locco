@@ -10,16 +10,16 @@ let firstThrow = false;
 
 function init() {
     initLevel();
-    document.getElementById('canvas').classList.remove('d-none');
-    document.getElementById('startscreen').classList.add('d-none');
+    addClassList('startscreen', 'd-none');
+    removeClassList('canvas', 'd-none');
     mute = false;
     intro.muted = true;
-    document.getElementById('btnVolume').classList.remove('d-none');
-    document.getElementById('btnMute').classList.add('d-none');
+    addClassList('btnMute', 'd-none');
+    removeClassList('btnVolume', 'd-none');
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     checkMobileDevice();
-    stopGame();
+    //stopGame();
 }
 
 function restart() {
