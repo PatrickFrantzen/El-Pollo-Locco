@@ -1,14 +1,14 @@
 class ThrowableObject extends MovableObject {
-
+    groundPosition = 360;
+    hit = false;
+    splashSoundCounter = 0;
+    splashSound = false;
     offset = {
         top: 0,
         left: 0,
         right: 0,
         bottom: 0
     };
-    hit = false;
-    splashSoundCounter = 0;
-    splashSound = false;
 
     Throwing_Images = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -38,25 +38,36 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
+    /**
+     * Function to apply gravity and animation to a thrown bottle
+     */
     throw() {
         this.applyGravity();
         this.setIntervalsforThrowing();
     };
 
+    /**
+    * creates an interval for moving and animation of bottles and binds "this" keyword to the provided value, so it does not get lost when providing to the setStoppableInterval function
+    */
     setIntervalsforThrowing() {
         this.moveInterval = setStoppableInterval(this.move.bind(this), 25);
         this.playInterval = setStoppableInterval(this.play.bind(this), 250);
         this.soundInterval = setStoppableInterval(this.sound.bind(this), 1);
     }
 
+    /**
+     * as long as the bottle is above ground it moves forward
+     */
     move() {
         if (this.isAboveGround()) {
             this.x += 5;
-        } 
+        }
     }
 
-
-   play() {
+    /**
+     * as long as the bottle is above ground it rotates and then splash on ground
+     */
+    play() {
         if (this.isAboveGround()) {
             this.rotate();
         } else {
@@ -73,6 +84,9 @@ class ThrowableObject extends MovableObject {
         this.splashSound = true;
     };
 
+    /**
+     * Function to reduce the playing of the sound to one time
+     */
     sound() {
         if (this.splashSound == true && this.splashSoundCounter == 0) {
             this.splashingSound();
@@ -83,7 +97,7 @@ class ThrowableObject extends MovableObject {
             this.splashSoundCounter = 0;
             this.splashSound = false;
         }
-  
+
     }
 
     splashingSound() {

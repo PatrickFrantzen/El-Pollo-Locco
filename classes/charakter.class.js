@@ -1,5 +1,16 @@
 class Character extends MovableObject {
 
+    currentImage = 0;
+    y = 180;
+    world;
+    speed = 4;
+    offset = {
+        top: 120,
+        left: 50, //70
+        right: 50, //50
+        bottom: 20 //20
+    };
+
     Walking_Images = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -63,16 +74,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
 
-    currentImage = 0;
-    y = 180;
-    world;
-    speed = 4;
-    offset = {
-        top: 120,
-        left: 50, //70
-        right: 50, //50
-        bottom: -20 //20
-    };
+
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -87,13 +89,17 @@ class Character extends MovableObject {
 
     }
 
-
+/**
+ * creates an interval for moving and animation of character and binds "this" keyword to the provided value, so it does not get lost when providing to the setStoppableInterval function
+ */
     animate() {
         this.walkingInterval = setStoppableInterval(this.walking.bind(this), 1000 / 60);
         this.animationInterval = setStoppableInterval(this.animations.bind(this), 70);
     }
 
-
+    /**
+     * Character moves left and right, walking music stops when Right or Left is not pressed any more
+     */
     walking() {
         this.world.walking_sound.pause();
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -108,7 +114,9 @@ class Character extends MovableObject {
         };
         this.world.camera_x = -this.x + 100;
     }
-
+    /**
+     *Different Animation when Character is dead, hurt, jumping, walking and idle 
+     */
     animations() {
         if (this.isDead()) {
             this.playAnimation(this.Dead_Images);
@@ -125,6 +133,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * After every move a timer starts and it is checked if the character plays idle animations
+     */
     checkForIdle() {
         if (this.isIdle() >= 10 && this.isIdle() <= 15) {
             this.playAnimation(this.Idle_Images);
@@ -133,18 +144,27 @@ class Character extends MovableObject {
         };
     }
 
+    /**
+     * when moving right, the direction is set to right direction and sound is playing
+     */
     movingRight() {
         this.moveRight();
         this.otherDirection = false;
         this.playSoundWhileMoving();
     }
 
+    /**
+     * when moving left, the direction is changed and sound is playing
+     */
     movingLeft() {
         this.moveLeft();
         this.otherDirection = true;
         this.playSoundWhileMoving();
     }
 
+    /**
+     * when the character moves and is not jumping the walking sound is playing
+     */
     playSoundWhileMoving() {
         if (!this.isAboveGround()) {
             playSound(this.world.walking_sound)

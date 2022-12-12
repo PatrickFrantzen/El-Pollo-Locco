@@ -37,19 +37,24 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
-/**
- * creates an interval for moving and animation of chicken and binds "this" keyword to the provided value, so it does not get lost when providing to the setStoppableInterval function
- */
+    /**
+     * creates an interval for moving and animation of chicken and binds "this" keyword to the provided value, so it does not get lost when providing to the setStoppableInterval function
+    */
     animate() {     
         this.playInterval = setStoppableInterval(this.play.bind(this), 100);
         this.moveInterval = setStoppableInterval(this.move.bind(this), 1000 / 60);
     }
 
-    
+    /**
+     * normal chicken is always moving left
+     */
     move() {
         this.moveLeft();
     }
 
+    /**
+     * if the chicken is alive the walking animation is playing and if it is dead the dead image is loaded.
+     */
     play() {
         if (this.alive == true) {
             this.playAnimation(this.Walking_Images);

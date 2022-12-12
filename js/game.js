@@ -3,38 +3,63 @@ let world;
 let canvasheight = 480;
 let keyboard = new Keyboard();
 let lastAction = 0;
-let lastThrow = 0;
-let throwRequest = 0;
-let firstThrow = false;
 
-
+/**
+ * start of the game
+ */
 function init() {
     initLevel();
-    addClassList('startscreen', 'd-none');
-    removeClassList('canvas', 'd-none');
-    mute = false;
-    intro.muted = true;
-    addClassList('btnMute', 'd-none');
-    removeClassList('btnVolume', 'd-none');
-    canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
+    showGameDisplay();
+    setMusicSetting();
+    setWorld();
     checkMobileDevice();
     //stopGame();
 }
 
+/**
+ * removing the introscreen and showing the canvas
+ */
+function showGameDisplay() {
+    addClassList('startscreen', 'd-none');
+    removeClassList('canvas', 'd-none');
+}
+
+/**
+ * sound from introscreen is muted and the buttons are changed, because the music is on when starting the game
+ */
+function setMusicSetting() {
+    mute = false;
+    intro.muted = true;
+    addClassList('btnMute', 'd-none');
+    removeClassList('btnVolume', 'd-none');
+}
+
+function setWorld() {
+    canvas = document.getElementById('canvas');
+    world = new World(canvas, keyboard);
+}
+
+/**
+ * restarting the game leads to the introscreen
+ */
 function restart() {
     location.reload();
 }
 
+/**
+ * if navigator identifies a mobile device the mobile buttons are active
+ */
 function checkMobileDevice() {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         // true for mobile device
-        document.getElementById('button-container').classList.remove('d-none');
+        removeClassList('button-container', 'd-none');
         activateMobileButtons();
     }
 }
 
-
+/**
+ * if on mobile device the touch functions on buttons are active
+ */
 function activateMobileButtons() {
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -94,6 +119,9 @@ function activateMobileButtons() {
 
 }
 
+/**
+ * eventlistener for movement when playing with keyboard
+ */
 window.addEventListener('keydown', (event) => {
     if (event.keyCode == 39) {
         keyboard.RIGHT = true;
@@ -111,7 +139,7 @@ window.addEventListener('keydown', (event) => {
         keyboard.SPACE = true;
     }
     if (event.keyCode == 68) {
-            keyboard.D = true;
+        keyboard.D = true;
     }
 });
 

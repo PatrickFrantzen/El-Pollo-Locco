@@ -36,49 +36,75 @@ class World {
         this.character.world = this;
     }
 
-    backgroundMusic() {
-            this.western_sound.loop = true;
-            playSound(this.western_sound);
-    }
-
+   /**
+    * creates an interval for moving and animation of different functions and binds "this" keyword to the provided value, so it does not get lost when providing to the setStoppableInterval function
+    */
     run() {
         this.checkThrowObjectsInterval = setStoppableInterval(this.checkThrowObjects.bind(this), 200);
-        this.collidingEnemyInterval = setStoppableInterval(this.collidingEnemy.bind(this), 100);
-        this.collidingEndbossInterval = setStoppableInterval(this.collidingEndboss.bind(this), 300);
-        this.collidingEnemyFromAboveInterval = setStoppableInterval(this.collidingEnemyFromAbove.bind(this), 1);
-        this.checkingForHittingBossInterval = setStoppableInterval(this.checkingForHittingEndboss.bind(this), 100);
-        this.collidingCoinInterval = setStoppableInterval(this.collidingCoin.bind(this), 1);
-        this.collidingBottleInterval = setStoppableInterval(this.collidingBottle.bind(this), 1);
+        this.collidingEnemyInterval = setStoppableInterval(this.pepeCollidingEnemy.bind(this), 100);
+        this.collidingEndbossInterval = setStoppableInterval(this.pepeCollidingEndboss.bind(this), 300);
+        this.collidingEnemyFromAboveInterval = setStoppableInterval(this.pepeCollidingEnemyFromAbove.bind(this), 1);
+        this.checkingForHittingBossInterval = setStoppableInterval(this.bottleHittingEndboss.bind(this), 100);
+        this.collidingCoinInterval = setStoppableInterval(this.pepeCollidingCoin.bind(this), 1);
+        this.collidingBottleInterval = setStoppableInterval(this.pepeCollidingBottle.bind(this), 1);
         this.backgroundMusicInterval = setStoppableInterval(this.checkIfMuteIsActive.bind(this), 1);
     };
 
+    /**
+     * automatic start of backgroundmusic
+     */
+    backgroundMusic() {
+        this.western_sound.loop = true;
+        playSound(this.western_sound);
+    }
 
-
+    /**
+     * checks if a bottle is throwable and after sucessfully thrown bottle is removed
+     */
     checkThrowObjects() {
-        
         if (this.checkIfPepeCanThrow()) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, 30);
-            this.throwableObjects.push(bottle);
-            this.character.amountOfBottles = this.character.amountOfBottles - 1;
-            this.character.updateBottlebar();
-            this.lastThrow = new Date().getTime();
+            this.pepeThrowsBottle();
             playSound(this.throwing_sound);
         }
         if (!this.checkForLastThrow(1000)) {
-            this.throwableObjects.splice(0,1);
+            this.throwableObjects.splice(0, 1);
         }
     };
 
+    /**
+     * if all arguments are true a bottle can be thrown
+     * @returns true or false
+     */
     checkIfPepeCanThrow() {
         return this.keyboard.D && this.character.amountOfBottles >= 1 && !this.character.otherDirection && !this.checkForLastThrow(1001);
     }
 
+    /**
+     * generates a new bottle and updates the amount of throwable bottles and the bottle statusbar
+     */
+    pepeThrowsBottle() {
+        let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, 30);
+        this.throwableObjects.push(bottle);
+        this.character.amountOfBottles = this.character.amountOfBottles - 1;
+        this.character.updateBottlebar();
+        this.lastThrow = new Date().getTime();
+    }
+
+    /**
+     * time of the last thrown bottle is compared to a given number to set the time between two throws
+     * @param {number} ms 
+     * @returns true or false
+     */
     checkForLastThrow(ms) {
         let timepassed = new Date().getTime() - this.lastThrow;
         return timepassed < ms;
     }
 
-    collidingCoin() {
+
+    /**
+     * When Character collides with coin, the amount of coins is changed,the coin statusbar is updated and the coin is removed from game
+     */
+    pepeCollidingCoin() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 this.character.collectCoins(coin);
@@ -87,7 +113,10 @@ class World {
         });
     }
 
-    collidingBottle() {
+    /**
+     * When Character collides with bottle, the amount of bottle is changed,the bottle statusbar is updated and the bottle is removed from game
+     */
+    pepeCollidingBottle() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.character.collectBottles(bottle);
@@ -96,29 +125,38 @@ class World {
         });
     }
 
-    collidingEnemy() {
+    /**
+     * When Character collides with an enemy, the character takes damage and the health statusbar is updated
+     */
+    pepeCollidingEnemy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && enemy.alive == true) {
                 this.character.hit(5);
-                this.statusbars.healthbar.setPercentage(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES);
+                this.character.updatePepeHealthbar(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES)
                 playSound(this.pain_sound);
             };
         });
     }
 
-    collidingEndboss() {
+    /**
+     * When Character collides with endboss, the character takes damage and the health statusbar is updated
+     */
+    pepeCollidingEndboss() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss) && endboss.alive == true) {
                 this.character.hit(25);
-                this.statusbars.healthbar.setPercentage(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES);
+                this.character.updatePepeHealthbar(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES)
                 playSound(this.pain_sound);
             };
         });
     }
 
-    collidingEnemyFromAbove() {
+    /**
+     * When Character jumps on an enemy and the enemy is alive and not jumping as well, the enemy dies
+     */
+    pepeCollidingEnemyFromAbove() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt() && enemy.alive == true && !enemy.isAboveGround()) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true && !enemy.isAboveGround()) {
                 enemy.alive = false;
                 playSound(this.chicken_sound);
                 setTimeout(() => {
@@ -128,17 +166,17 @@ class World {
         });
     }
 
-    checkingForHittingEndboss() {
+    /**
+     * When a bottle hits endboss, endboss takes damage and healthbar is updated
+     */
+    bottleHittingEndboss() {
         let endboss = this.level.endboss[0];
         let throwableBottle = this.throwableObjects;
         this.throwableObjects.forEach((bottle) => {
             if (endboss.isColliding(bottle)) {
                 endboss.hit(25);
-                this.statusbars.boss_healthbar.setPercentage(endboss.energy, this.statusbars.boss_healthbar.HEALTH_IMAGES);
+                endboss.updateEndbossHealthbar(endboss.energy, this.statusbars.boss_healthbar.HEALTH_IMAGES);
                 this.playSoundsForHittingEndboss();
-                clearInterval(throwableBottle[0].moveInterval);
-                clearInterval(throwableBottle[0].playInterval);
-                clearInterval(throwableBottle[0].gravityInterval);
                 throwableBottle.splice(0, 1);
             }
         });
@@ -154,6 +192,9 @@ class World {
         this.level.enemies.splice(index, 1);
     }
 
+    /**
+     * interval check if variable mute is true or false to mute all sounds
+     */
     checkIfMuteIsActive() {
         if (mute) {
             this.western_sound.muted = true;
@@ -162,8 +203,10 @@ class World {
         }
     }
 
+    /**
+     * function to add all objects to canvas and move camera
+     */
     draw() {
-
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectToMap(this.level.backgroundObjects);
@@ -184,8 +227,6 @@ class World {
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
 
-
-        //Draw() wird immer wieder ausgeführt, je nach Leistung der Graphikkarte
         let self = this;
         requestAnimationFrame(function () {
             self.draw();

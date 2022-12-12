@@ -22,6 +22,9 @@ let numberOfBottles = 10;
 let level1;
 
 
+/**
+ * initiates the level with loading all objects and positions
+ */
 function initLevel() {
 level1 = new Level(
    createLevelEnemies(),
@@ -33,11 +36,19 @@ level1 = new Level(
 );
 }
 
+/**
+ * one Endboss is created and pushed into an array
+ * @returns the endboss of the game
+ */
 function createLevelEndboss(){
     endboss.push(new Endboss());
     return endboss;
 }
 
+/**
+ * depending on number of Enemies small or normal chickens and their position in the game are created and pushed into the enemies array
+ * @returns all enemies of the level
+ */
 function createLevelEnemies(){
     for (let i = 0; i < numberOfEnemies; i++) {
         if (i % 2 == 0) {
@@ -53,6 +64,10 @@ function createLevelEnemies(){
     return enemies;
 }
 
+/**
+ * depending on numberOfClouds the clouds and the position are pushed into the cloud array
+ * @returns all clouds of the game
+ */
 function createLevelClouds() {
     for (let i = 0; i < numberOfClouds; i++) {
         let cloud = new Cloud('img/5_background/layers/4_clouds/1.png', cloudPosition_x);
@@ -62,6 +77,10 @@ function createLevelClouds() {
     return clouds;
 }
 
+/**
+ * depending on the number of Backgrounds an amount of even and uneven images of backgrounds are pushed into the background array
+ * @returns all backgrounds of the game 
+ */
 function createLevelBackground() {
     for (let i = 0; i < numberOfBackgrounds; i++) {
         if (backgroundnumberIsEven == true) {
@@ -91,18 +110,28 @@ function getOddBackgrounds() {
     backgroundPosition_x = backgroundPosition_x + 719;
 }
 
+/**
+ * three arcs with fixed positions are created and then depening of numberofCoins the coins and their position are pushed into the coin array.
+ * @returns all coins of the level
+ */
 function createLevelCoins() {
-    getCoinArc(500, 200);
-    getCoinArc(1500, 200);
-    getCoinArc(2500, 200);
+    getCoinArc(getRandomArbitrary(300, 600), getRandomArbitrary(100, 300));
+    getCoinArc(getRandomArbitrary(1100, 1600), getRandomArbitrary(100, 300));
+    getCoinArc(getRandomArbitrary(2100, 2600), getRandomArbitrary(100, 300));
     for (let i = 0; i < numberOfCoins; i++) {
         let coin = new Coin('img/8_coin/coin_1.png', coinPosition_x, coinPosition_y);
         coins.push(coin);
-        coinPosition_x = coinPosition_x + Math.random() * 500;
+        coinPosition_x = coinPosition_x + Math.random() * getRandomArbitrary(400, 500);
+        coinPosition_y = getRandomArbitrary(100, 350);
     }
     return coins;
 }
 
+/**
+ * an Coin Arc is created with fixed positions but random for every playthrough
+ * @param {number} Arc_x 
+ * @param {number} Arc_y 
+ */
 function getCoinArc(Arc_x, Arc_y) {
     let coinArcPosition_x = Arc_x;
     let coinArcPosition_y = Arc_y;
@@ -128,6 +157,10 @@ function getDownwardsArc(coinArcPosition_x, coinArcPosition_y) {
 } 
 }
 
+/**
+ * depending on the number of bottles these bottles and their position are pushed into the bottles array
+ * @returns all bottles of level
+ */
 function createLevelBottles(){
     for (let i = 0; i < numberOfBottles; i++) {
         let bottle = new Bottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', bottlePosition_x);

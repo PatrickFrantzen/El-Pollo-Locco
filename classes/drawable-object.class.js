@@ -30,6 +30,10 @@ class DrawableObject {
             
         }
 
+        /**
+         * to draw a Frame around every object for debugging purposes
+         * @param {string} ctx 
+         */
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottle || this instanceof ThrowableObject) {
             ctx.beginPath();
