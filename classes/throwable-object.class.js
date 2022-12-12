@@ -41,9 +41,6 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.applyGravity();
         this.setIntervalsforThrowing();
-        setTimeout(() => {
-            this.removeBottlefromArray();
-        }, 2000);
     };
 
     setIntervalsforThrowing() {
@@ -92,13 +89,5 @@ class ThrowableObject extends MovableObject {
     splashingSound() {
         playSound(world.shattering_sound);
     }
-
-    removeBottlefromArray() {
-        world.throwableObjects.splice(0, 1);
-        clearInterval(this.moveInterval);
-        clearInterval(this.playInterval);
-        
-    }
-
 
 }

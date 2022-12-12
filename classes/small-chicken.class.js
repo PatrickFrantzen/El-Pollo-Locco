@@ -1,7 +1,7 @@
 class SmallChicken extends Chicken {
-    minSpeed = 0.5;
-    maxSpeed = 1.8;
-    jumpImpuls = getRandomArbitrary(30, 80);
+    minSpeed = 0.4;
+    maxSpeed = 1.3;
+    jumpImpuls = getRandomArbitrary(80, 160);
     jumpCounter = 0;
     animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed);
     speed = this.animationSpeed / 2;
@@ -17,10 +17,10 @@ class SmallChicken extends Chicken {
     ];
 
     offset = {
-        top: 10,
-        left: -10,
-        right: -10,
-        bottom: 20
+        top: 35,
+        left: 25,
+        right: 25,
+        bottom: 35
     };
 
     constructor(imagePath, x) {

@@ -18,7 +18,7 @@ let coinPosition_y = 350;
 let numberOfCoins = 10;
 let allCoins = 25;
 let bottlePosition_x = 300;
-let numberOfBottles = 7;
+let numberOfBottles = 10;
 let level1;
 
 
@@ -132,7 +132,7 @@ function createLevelBottles(){
     for (let i = 0; i < numberOfBottles; i++) {
         let bottle = new Bottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', bottlePosition_x);
         bottles.push(bottle);
-        bottlePosition_x = bottlePosition_x + Math.random() + 400;
+        bottlePosition_x = bottlePosition_x + getRandomArbitrary(100, 300);
     }
     return bottles;
 }

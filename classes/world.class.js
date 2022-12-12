@@ -8,7 +8,7 @@ class World {
     camera_x = 0;
     statusbars = CharakterStatusbars;
     throwableObjects = [];
-    throw = false;
+    lastThrow;
     bosshit = false;
     mute_activated = false;
 
@@ -55,14 +55,28 @@ class World {
 
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.character.amountOfBottles >= 1 && !this.character.otherDirection) {
+        
+        if (this.checkIfPepeCanThrow()) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, 30);
             this.throwableObjects.push(bottle);
             this.character.amountOfBottles = this.character.amountOfBottles - 1;
             this.character.updateBottlebar();
+            this.lastThrow = new Date().getTime();
             playSound(this.throwing_sound);
         }
+        if (!this.checkForLastThrow(1000)) {
+            this.throwableObjects.splice(0,1);
+        }
     };
+
+    checkIfPepeCanThrow() {
+        return this.keyboard.D && this.character.amountOfBottles >= 1 && !this.character.otherDirection && !this.checkForLastThrow(1001);
+    }
+
+    checkForLastThrow(ms) {
+        let timepassed = new Date().getTime() - this.lastThrow;
+        return timepassed < ms;
+    }
 
     collidingCoin() {
         this.level.coins.forEach((coin) => {
@@ -104,7 +118,7 @@ class World {
 
     collidingEnemyFromAbove() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt() && enemy.alive == true) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt() && enemy.alive == true && !enemy.isAboveGround()) {
                 enemy.alive = false;
                 playSound(this.chicken_sound);
                 setTimeout(() => {

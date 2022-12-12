@@ -66,6 +66,7 @@ function lostOutroscreen() {
     document.getElementById('lost').classList.remove('d-none');
     document.getElementById('lost').classList.add('d-flex');
     document.getElementById('restart').classList.remove('d-none');
+    document.getElementById('button-container').classList.add('d-none');
 }
 
 function winOutroscreen() {
@@ -73,6 +74,7 @@ function winOutroscreen() {
     document.getElementById('win').classList.remove('d-none');
     document.getElementById('win').classList.add('d-flex');
     document.getElementById('restart').classList.remove('d-none');
+    document.getElementById('button-container').classList.add('d-none');
 }
 
 function closeHelpDialog() {

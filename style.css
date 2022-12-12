@@ -116,8 +116,8 @@ canvas {
 }
 
 #btnLeft, #btnRight, #btnJump, #btnThrow {
-    margin-left: 50px;
-    margin-left: 50px;
+    margin-right: 35px;
+    margin-left: 35px;
 }
 
 .restart {
@@ -217,6 +217,22 @@ p {
     }
 }
 
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100vw;
+    }
+
+    #btnLeft, #btnRight, #btnJump, #btnThrow {
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+
+    .button-container-left, .button-container-right {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+}
+
 
 @media only screen and (max-height: 720px) {
     .intro-buttons {
@@ -274,6 +290,13 @@ p {
 }
 }
 
+@media only screen and (max-height: 530px) {
+.lower-button-container {
+    position: fixed;
+    bottom: 10px;
+}
+}
+
 @media only screen and (max-height: 480px) {
 .startscreen {
     height: 100vh;
@@ -296,11 +319,8 @@ canvas {
 
 /* Responsive max. height 400px */
 
-@media only screen and (max-height: 400px) {
+@media only screen and (max-height: 435px) {
 
-    .lower-button-container {
-        bottom: 55px;
-    }
 
     .help-display-head {
         font-size: 35px;
@@ -336,12 +356,56 @@ canvas {
 
 
 /* WIDTH */
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1000px) {
     .help-display-body {
         padding-left: 15px;
         padding-right: 15px;
+        font-size: 23px;
+    }
+}
+
+@media only screen and (max-width: 880px) {
+    .help-display-head {
+        font-size: 40px;
+    }
+    .help-display-body {
+        font-size: 21px;
     }
 
+}
+
+
+
+@media only screen and (max-width: 450px) {
+    .help-display-head {
+        font-size: 30px;
+    }
+    
+    .help-display-body {
+        font-size: 18px;
+    }
+
+    .help-button {
+        height: 30px;
+        width: 30px;
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .help-display-head {
+        font-size: 28px;
+    }
+    
+    .help-display-body {
+        font-size: 20px;
+    }
+
+    .help-button {
+        height: 30px;
+        width: 30px;
+        font-size: 24px;
+    }
 }
 
 /*@media only screen and (max-width: 720px) {

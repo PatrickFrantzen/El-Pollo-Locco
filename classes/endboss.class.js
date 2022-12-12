@@ -4,8 +4,12 @@ class Endboss extends MovableObject {
     width = 250;
     y = 55;
     x = 3000;
-    endbossCounter = 0;
+    endbossIsDeadAnimationCounter = 0;
     alive = true;
+    minSpeed = 10;
+    maxSpeed = 15;
+    animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed);
+    speed = this.animationSpeed / 2;
 
     offset = {
         top: 150,
@@ -55,34 +59,31 @@ class Endboss extends MovableObject {
         this.loadImages(this.attack_Images);
         this.loadImages(this.hurt_Images);
         this.loadImages(this.dead_Images);
-        this.x = 3000;
-        this.speed = 5;
         this.animate();
     }
 
     animate() {
         this.playInterval = setStoppableInterval(this.play.bind(this), 125);
-        
     }
 
     play() {
-        if (this.isDead() && this.endbossCounter <= 14) {
+        if (this.isDead() && this.endbossIsDeadAnimationCounter <= 14) {
             this.dead();
-        } else if (this.isDead() && this.endbossCounter > 14) {
+        } else if (this.isDead() && this.endbossIsDeadAnimationCounter > 14) {
             this.deadEndscreen();
         }else if (this.isHurt()) {
-            this.hurt();
+            this.playAnimation(this.hurt_Images);
         }else if (this.energy < 100) {
-            this.attack();
+            this.playAnimation(this.attack_Images);
             this.move();
         } else {
-            this.alert();
+            this.playAnimation(this.alert_Images);
         }
     }
 
     dead() {
             this.playAnimation(this.dead_Images);
-            this.endbossCounter++;
+            this.endbossIsDeadAnimationCounter++;
             this.alive = false;
     }
 
@@ -90,18 +91,6 @@ class Endboss extends MovableObject {
         this.loadImage(this.dead_Images[2]);
         stopGame();
         winOutroscreen();
-    }
-
-    hurt() {
-        this.playAnimation(this.hurt_Images);
-    }
-
-    attack() {
-            this.playAnimation(this.attack_Images);
-    }
-
-    alert() {
-        this.playAnimation(this.alert_Images);
     }
 
     move() {

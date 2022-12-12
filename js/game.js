@@ -19,7 +19,7 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     checkMobileDevice();
-    //stopGame();
+    stopGame();
 }
 
 function restart() {

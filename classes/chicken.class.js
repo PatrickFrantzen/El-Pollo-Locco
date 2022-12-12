@@ -4,8 +4,8 @@ class Chicken extends MovableObject {
     width = 50;
     energy = 25;
     alive = true;
-    minSpeed = 1;
-    maxSpeed = 5;
+    minSpeed = 0.8;
+    maxSpeed = 3;
 
     animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed);
     speed = this.animationSpeed / 2;
@@ -21,10 +21,10 @@ class Chicken extends MovableObject {
     ];
 
     offset = {
-        top: 25,
-        left: -5,
-        right: -5,
-        bottom: 20
+        top: 35,
+        left: 25,
+        right: 25,
+        bottom: 35
     };
 
 
