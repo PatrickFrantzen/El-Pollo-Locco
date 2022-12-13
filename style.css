@@ -209,7 +209,20 @@ p {
     margin-bottom: 5px;
 }
 
+.mobile-phone-warning {
+    display: none;
+}
+
 /* Smartphones --------------- */
+
+@media only screen and (orientation: portrait) {
+    .mobile-phone-warning {
+        display: flex;
+        font-size: 24px;
+        color: rgb(148, 0, 0);
+        text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    }
+}
 
 @media only screen and (min-width: 1200px) {
     .button-container {
@@ -288,7 +301,11 @@ p {
     margin-top: 3px;
     margin-bottom: 3px;
 }
+
+
 }
+
+
 
 @media only screen and (max-height: 530px) {
 .lower-button-container {
@@ -408,67 +425,5 @@ canvas {
     }
 }
 
-/*@media only screen and (max-width: 720px) {
-
-}
-    
-@media only screen and (max-height: 480px) {
-    canvas {
-        height: 100vh;
-    }
-
-    h1 {
-        font-size: 64px;
-    }
-
-    .startscreen img {
-        width: 50%;
-        height: 50%;
-    }
-
-}
-
-@media only screen and (max-height: 375px) and (max-width: 740px) {
-
-    h1 {
-        font-size: 64px;
-    }
-
-    .startscreen img {
-        width: 50%;
-        height: 50%;
-    }
-
-    .outroscreen {
-        height: 100vh;
-        width: 100vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
-
-
-
-
-@media only screen and (orientation: portrait) {
-    .outroscreen {
-        height: 30vh;
-    }
-
-    canvas {
-        width: 100%;
-    }
-
-    .button-container {
-        display: flex;
-    }
-}
-
-/*@media only screen and (orientation: landscape) {
-    .button-container {
-        display: flex;
-    }
-}*/
 
     
