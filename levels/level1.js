@@ -83,7 +83,7 @@ function createLevelClouds() {
  */
 function createLevelBackground() {
     for (let i = 0; i < numberOfBackgrounds; i++) {
-        if (backgroundnumberIsEven == true) {
+        if (backgroundnumberIsEven) {
             getEvenBackgrounds();
         }else getOddBackgrounds();
     }
