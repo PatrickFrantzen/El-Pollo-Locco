@@ -11,7 +11,7 @@ class Character extends MovableObject {
         bottom: 20 //20
     };
 
-    Walking_Images = [
+    walkingImages = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
         'img/2_character_pepe/2_walk/W-23.png',
@@ -20,7 +20,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/2_walk/W-26.png'
     ];
 
-    Jumping_Images = [
+    jumpingImages = [
         'img/2_character_pepe/3_jump/J-31.png',
         'img/2_character_pepe/3_jump/J-32.png',
         'img/2_character_pepe/3_jump/J-33.png',
@@ -32,13 +32,13 @@ class Character extends MovableObject {
         'img/2_character_pepe/3_jump/J-39.png',
     ];
 
-    Hurt_Images = [
+    hurtImages = [
         'img/2_character_pepe/4_hurt/H-41.png',
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
 
-    Dead_Images = [
+    deadImages = [
         'img/2_character_pepe/5_dead/D-51.png',
         'img/2_character_pepe/5_dead/D-52.png',
         'img/2_character_pepe/5_dead/D-53.png',
@@ -48,7 +48,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-57.png'
     ];
 
-    Idle_Images = [
+    idleImages = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
         'img/2_character_pepe/1_idle/idle/I-3.png',
@@ -61,7 +61,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-10.png',
     ];
 
-    Long_Idle_Images = [
+    longIdleImages = [
         'img/2_character_pepe/1_idle/long_idle/I-11.png',
         'img/2_character_pepe/1_idle/long_idle/I-12.png',
         'img/2_character_pepe/1_idle/long_idle/I-13.png',
@@ -78,12 +78,12 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
-        this.loadImages(this.Walking_Images);
-        this.loadImages(this.Jumping_Images);
-        this.loadImages(this.Hurt_Images);
-        this.loadImages(this.Dead_Images);
-        this.loadImages(this.Idle_Images);
-        this.loadImages(this.Long_Idle_Images);
+        this.loadImages(this.walkingImages);
+        this.loadImages(this.jumpingImages);
+        this.loadImages(this.hurtImages);
+        this.loadImages(this.deadImages);
+        this.loadImages(this.idleImages);
+        this.loadImages(this.longIdleImages);
         this.applyGravity();
         this.animate();
 
@@ -101,8 +101,8 @@ class Character extends MovableObject {
      * Character moves left and right, walking music stops when Right or Left is not pressed any more
      */
     walking() {
-        this.world.walking_sound.pause();
-        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+        this.world.walkingSound.pause();
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
             this.movingRight();
         };
         if (this.world.keyboard.LEFT && this.x > 0) {
@@ -110,24 +110,24 @@ class Character extends MovableObject {
         };
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
-            playSound(this.world.jumping_sound);
+            playSound(this.world.jumpingSound);
         };
-        this.world.camera_x = -this.x + 100;
+        this.world.cameraX= -this.x + 100;
     }
     /**
      *Different Animation when Character is dead, hurt, jumping, walking and idle 
      */
     animations() {
         if (this.isDead()) {
-            this.playAnimation(this.Dead_Images);
+            this.playAnimation(this.deadImages);
             stopGame();
             lostOutroscreen();
         } else if (this.isHurt()) {
-            this.playAnimation(this.Hurt_Images);
+            this.playAnimation(this.hurtImages);
         } else if (this.isAboveGround()) {
-            this.playAnimation(this.Jumping_Images);
-        } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.level_end_x) {
-            this.playAnimation(this.Walking_Images);
+            this.playAnimation(this.jumpingImages);
+        } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.levelEndX) {
+            this.playAnimation(this.walkingImages);
         } else {
             this.checkForIdle()
         }
@@ -137,11 +137,10 @@ class Character extends MovableObject {
      * After every move a timer starts and it is checked if the character plays idle animations
      */
     checkForIdle() {
-        if (this.isIdle() >= 10 && this.isIdle() <= 15) {
-            this.playAnimation(this.Idle_Images);
-        } else if (this.isIdle() >= 15) {
-            this.playAnimation(this.Long_Idle_Images);
-        };
+        if (this.isIdle() <= 4) {
+            this.playAnimation(this.idleImages);
+        } else this.playAnimation(this.longIdleImages);
+
     }
 
     /**
@@ -167,7 +166,7 @@ class Character extends MovableObject {
      */
     playSoundWhileMoving() {
         if (!this.isAboveGround()) {
-            playSound(this.world.walking_sound)
+            playSound(this.world.walkingSound)
         };
     }
 

@@ -10,13 +10,13 @@ class Chicken extends MovableObject {
     animationSpeed = getRandomArbitrary(this.minSpeed, this.maxSpeed);
     speed = this.animationSpeed / 2;
     
-    Walking_Images = [
+    walkingImages = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
     ];
 
-    Dead_Images = [
+    deadImages = [
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
 
@@ -31,8 +31,8 @@ class Chicken extends MovableObject {
 
     constructor(imagePath, x) {
         super().loadImage(imagePath)
-        this.loadImages(this.Walking_Images);
-        this.loadImages(this.Dead_Images);
+        this.loadImages(this.walkingImages);
+        this.loadImages(this.deadImages);
         this.x = x + Math.random() * 500; // Math.random = zufällige Zahl zwischen 0 und 1, mulitpliziert mit 500 ergibt ein Wert zwischen 200 und 700
         this.animate();
     }
@@ -57,9 +57,9 @@ class Chicken extends MovableObject {
      */
     play() {
         if (this.alive == true) {
-            this.playAnimation(this.Walking_Images);
+            this.playAnimation(this.walkingImages);
         } else {
-            this.loadImage(this.Dead_Images);
+            this.loadImage(this.deadImages);
             clearInterval(this.playInterval);
             clearInterval(this.moveInterval);
         }

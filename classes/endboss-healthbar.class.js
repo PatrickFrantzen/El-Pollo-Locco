@@ -4,7 +4,7 @@ class Endbosshealthbar extends Statusbar {
     height = 60;
 
 
-    HEALTH_IMAGES =[
+    healthImages =[
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/40.png',
@@ -15,10 +15,10 @@ class Endbosshealthbar extends Statusbar {
 
     constructor(imagePath, x, y) {
         super().loadImage(imagePath);
-        this.loadImages(this.HEALTH_IMAGES);
+        this.loadImages(this.healthImages);
         this.x = x;
         this.y = y;
-        this.setPercentage(100, this.HEALTH_IMAGES);
+        this.setPercentage(100, this.healthImages);
     }
 
 }

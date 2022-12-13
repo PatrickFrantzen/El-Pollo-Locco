@@ -7,10 +7,9 @@ class DrawableObject {
     currentImage = 0;
 
 
-        //loadImage('img/test.png')
         loadImage(path) {
-            this.img = new Image(); //this.img = document.getElementbyId('image') <img id="image" src>
-            this.img.src = path;
+                this.img = new Image(); //this.img = document.getElementbyId('image') <img id="image" src>
+                this.img.src = path;
         };
     
         draw(ctx) {

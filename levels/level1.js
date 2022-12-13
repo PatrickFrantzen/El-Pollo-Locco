@@ -7,17 +7,17 @@ let clouds = [];
 let background = [];
 let coins = [];
 let bottles = [];
-let enemiePosition_x = 400;
+let enemiePositionX = 400;
 let numberOfEnemies = 15;
-let cloudPosition_x = -719;
+let cloudPositionX = -719;
 let numberOfClouds = 15;
-let backgroundPosition_x = -719;
+let backgroundPositionX = -719;
 let numberOfBackgrounds = 7;
-let coinPosition_x = 300;
-let coinPosition_y = 350;
+let coinPositionX = 300;
+let coinPositionY = 350;
 let numberOfCoins = 10;
 let allCoins = 25;
-let bottlePosition_x = 300;
+let bottlePositionX = 300;
 let numberOfBottles = 10;
 let level1;
 
@@ -52,13 +52,13 @@ function createLevelEndboss(){
 function createLevelEnemies(){
     for (let i = 0; i < numberOfEnemies; i++) {
         if (i % 2 == 0) {
-            let chicken = new Chicken('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png', enemiePosition_x);
+            let chicken = new Chicken('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png', enemiePositionX);
             enemies.push(chicken);
-            enemiePosition_x = enemiePosition_x + Math.random() * 550; 
+            enemiePositionX = enemiePositionX + Math.random() * 550; 
         } else {
-            let smallchicken = new SmallChicken('img/3_enemies_chicken/chicken_small/1_walk/1_w.png', enemiePosition_x);
+            let smallchicken = new SmallChicken('img/3_enemies_chicken/chicken_small/1_walk/1_w.png', enemiePositionX);
             enemies.push(smallchicken);
-            enemiePosition_x = enemiePosition_x + Math.random() * 550;
+            enemiePositionX = enemiePositionX + Math.random() * 550;
         };
     }
     return enemies;
@@ -70,9 +70,9 @@ function createLevelEnemies(){
  */
 function createLevelClouds() {
     for (let i = 0; i < numberOfClouds; i++) {
-        let cloud = new Cloud('img/5_background/layers/4_clouds/1.png', cloudPosition_x);
+        let cloud = new Cloud('img/5_background/layers/4_clouds/1.png', cloudPositionX);
         clouds.push(cloud);
-        cloudPosition_x = cloudPosition_x + 719;
+        cloudPositionX = cloudPositionX + 719;
     }
     return clouds;
 }
@@ -85,29 +85,27 @@ function createLevelBackground() {
     for (let i = 0; i < numberOfBackgrounds; i++) {
         if (backgroundnumberIsEven == true) {
             getEvenBackgrounds();
-        }else{
-            getOddBackgrounds();
-        }
+        }else getOddBackgrounds();
     }
     return background;
 }
 
 function getEvenBackgrounds() {
     for (let j = 0; j < evenBackgrounds.length; j++) {
-        let evenBackground = new BackgroundObject(evenBackgrounds[j], backgroundPosition_x);
+        let evenBackground = new BackgroundObject(evenBackgrounds[j], backgroundPositionX);
         background.push(evenBackground);   
     }
     backgroundnumberIsEven = false;
-    backgroundPosition_x = backgroundPosition_x + 719;
+    backgroundPositionX = backgroundPositionX + 719;
 }
 
 function getOddBackgrounds() {
     for (let k = 0; k < oddBackgrounds.length; k++) {
-        let oddBackground = new BackgroundObject(oddBackgrounds[k], backgroundPosition_x);
+        let oddBackground = new BackgroundObject(oddBackgrounds[k], backgroundPositionX);
         background.push(oddBackground);
     }
     backgroundnumberIsEven = true;
-    backgroundPosition_x = backgroundPosition_x + 719;
+    backgroundPositionX = backgroundPositionX + 719;
 }
 
 /**
@@ -119,41 +117,41 @@ function createLevelCoins() {
     getCoinArc(getRandomArbitrary(1100, 1600), getRandomArbitrary(100, 300));
     getCoinArc(getRandomArbitrary(2100, 2600), getRandomArbitrary(100, 300));
     for (let i = 0; i < numberOfCoins; i++) {
-        let coin = new Coin('img/8_coin/coin_1.png', coinPosition_x, coinPosition_y);
+        let coin = new Coin('img/8_coin/coin_1.png', coinPositionX, coinPositionY);
         coins.push(coin);
-        coinPosition_x = coinPosition_x + Math.random() * getRandomArbitrary(400, 500);
-        coinPosition_y = getRandomArbitrary(100, 350);
+        coinPositionX = coinPositionX + Math.random() * getRandomArbitrary(400, 500);
+        coinPositionY = getRandomArbitrary(100, 350);
     }
     return coins;
 }
 
 /**
  * an Coin Arc is created with fixed positions but random for every playthrough
- * @param {number} Arc_x 
- * @param {number} Arc_y 
+ * @param {number} ArcX 
+ * @param {number} ArcY 
  */
-function getCoinArc(Arc_x, Arc_y) {
-    let coinArcPosition_x = Arc_x;
-    let coinArcPosition_y = Arc_y;
-    getUpwardsArc(coinArcPosition_x, coinArcPosition_y);
+function getCoinArc(ArcX, ArcY) {
+    let coinArcPositionX = ArcX;
+    let coinArcPositionY = ArcY;
+    getUpwardsArc(coinArcPositionX, coinArcPositionY);
 }
 
-function getUpwardsArc(coinArcPosition_x, coinArcPosition_y) {
+function getUpwardsArc(coinArcPositionX, coinArcPositionY) {
     for (let i = 0; i < 2; i++) {
-        let coin = new Coin ('img/8_coin/coin_1.png', coinArcPosition_x, coinArcPosition_y);
+        let coin = new Coin ('img/8_coin/coin_1.png', coinArcPositionX, coinArcPositionY);
         coins.push(coin);
-        coinArcPosition_x = coinArcPosition_x + 75;
-        coinArcPosition_y = coinArcPosition_y - 50;
+        coinArcPositionX = coinArcPositionX + 75;
+        coinArcPositionY = coinArcPositionY - 50;
     }
-    getDownwardsArc(coinArcPosition_x, coinArcPosition_y);
+    getDownwardsArc(coinArcPositionX, coinArcPositionY);
 }
 
-function getDownwardsArc(coinArcPosition_x, coinArcPosition_y) {
+function getDownwardsArc(coinArcPositionX, coinArcPositionY) {
     for (let i = 0; i < 3; i++) {
-        let coin = new Coin ('img/8_coin/coin_1.png', coinArcPosition_x, coinArcPosition_y);
+        let coin = new Coin ('img/8_coin/coin_1.png', coinArcPositionX, coinArcPositionY);
         coins.push(coin);
-        coinArcPosition_x = coinArcPosition_x + 75;
-        coinArcPosition_y = coinArcPosition_y + 50;
+        coinArcPositionX = coinArcPositionX + 75;
+        coinArcPositionY = coinArcPositionY + 50;
 } 
 }
 
@@ -163,9 +161,9 @@ function getDownwardsArc(coinArcPosition_x, coinArcPosition_y) {
  */
 function createLevelBottles(){
     for (let i = 0; i < numberOfBottles; i++) {
-        let bottle = new Bottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', bottlePosition_x);
+        let bottle = new Bottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', bottlePositionX);
         bottles.push(bottle);
-        bottlePosition_x = bottlePosition_x + getRandomArbitrary(100, 300);
+        bottlePositionX = bottlePositionX + getRandomArbitrary(100, 300);
     }
     return bottles;
 }

@@ -10,14 +10,14 @@ class ThrowableObject extends MovableObject {
         bottom: 0
     };
 
-    Throwing_Images = [
+    throwingImages = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
     ];
 
-    Splashing_Images = [
+    splashingImages = [
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png',
@@ -26,15 +26,15 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ]
 
-    constructor(x, y, speed_y) {
+    constructor(x, y, speedY) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
-        this.loadImages(this.Throwing_Images);
-        this.loadImages(this.Splashing_Images);
+        this.loadImages(this.throwingImages);
+        this.loadImages(this.splashingImages);
         this.x = x;
         this.y = y;
         this.height = 60;
         this.width = 50;
-        this.speed_y = speed_y;
+        this.speedY = speedY;
         this.throw();
     }
 
@@ -51,7 +51,7 @@ class ThrowableObject extends MovableObject {
     */
     setIntervalsforThrowing() {
         this.moveInterval = setStoppableInterval(this.move.bind(this), 25);
-        this.playInterval = setStoppableInterval(this.play.bind(this), 250);
+        this.playInterval = setStoppableInterval(this.play.bind(this), 150);
         this.soundInterval = setStoppableInterval(this.sound.bind(this), 1);
     }
 
@@ -76,11 +76,11 @@ class ThrowableObject extends MovableObject {
     }
 
     rotate() {
-        this.playAnimation(this.Throwing_Images);
+        this.playAnimation(this.throwingImages);
     };
 
     splash() {
-        this.playAnimation(this.Splashing_Images);
+        this.playAnimation(this.splashingImages);
         this.splashSound = true;
     };
 
@@ -101,7 +101,7 @@ class ThrowableObject extends MovableObject {
     }
 
     splashingSound() {
-        playSound(world.shattering_sound);
+        playSound(world.shatteringSound);
     }
 
 }

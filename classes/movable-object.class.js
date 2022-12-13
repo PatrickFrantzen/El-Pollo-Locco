@@ -2,7 +2,7 @@ class MovableObject extends DrawableObject {
     groundPosition = 180;
     speed = 0.15;
     otherDirection = false;
-    speed_y = 0;
+    speedY = 0;
     acceleration = 1.75;
     energy = 100;
     lastHit = 0;
@@ -27,9 +27,9 @@ class MovableObject extends DrawableObject {
      * every object which can be thrown or jumps comes back to the ground Position
      */
     gravity() {
-        if (this.isAboveGround() || this.speed_y > 0) {
-            this.y -= this.speed_y;
-            this.speed_y -= this.acceleration;
+        if (this.isAboveGround() || this.speedY > 0) {
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
         } else {
             this.y = this.groundPosition;
         }
@@ -124,10 +124,10 @@ class MovableObject extends DrawableObject {
     };
 
     /**
-     * sets the variable speed_y of an object to 30 for gravity function
+     * sets the variable speedY of an object to 30 for gravity function
      */
     jump() {
-        this.speed_y = 30;
+        this.speedY = 30;
     };
 
     /**
@@ -155,7 +155,7 @@ class MovableObject extends DrawableObject {
      */
     updateCoinbar() {
         let percentageOfCoins = this.amountOfCoins / allCoins * 100;
-        this.world.statusbars.coinbar.setPercentage(percentageOfCoins, this.world.statusbars.coinbar.COLLECTED_COINS_IMAGES);
+        this.world.statusbars.coinbar.setPercentage(percentageOfCoins, this.world.statusbars.coinbar.collectedCoinsImages);
     }
 
     /**
@@ -163,7 +163,7 @@ class MovableObject extends DrawableObject {
      */
     updateBottlebar() {
         let percentageOfBottles = this.amountOfBottles / numberOfBottles * 100;
-        this.world.statusbars.bottlebar.setPercentage(percentageOfBottles, this.world.statusbars.bottlebar.COLLECTED_BOTTLES_IMAGES);
+        this.world.statusbars.bottlebar.setPercentage(percentageOfBottles, this.world.statusbars.bottlebar.collectedBottlesImages);
     }
 
     /**
@@ -181,7 +181,7 @@ class MovableObject extends DrawableObject {
      * @param {string} images 
      */
     updateEndbossHealthbar(energy, images) {
-        world.statusbars.boss_healthbar.setPercentage(energy, images);
+        world.statusbars.bossHealthbar.setPercentage(energy, images);
     }
 
 }

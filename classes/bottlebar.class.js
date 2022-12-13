@@ -3,7 +3,7 @@ class Bottlebar extends Statusbar {
     height = 60;
 
 
-    COLLECTED_BOTTLES_IMAGES =[
+    collectedBottlesImages =[
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/orange/0.png',
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/orange/20.png',
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/orange/40.png',
@@ -14,9 +14,9 @@ class Bottlebar extends Statusbar {
 
     constructor(imagePath, x, y) {
         super().loadImage(imagePath);
-        this.loadImages(this.COLLECTED_BOTTLES_IMAGES);
+        this.loadImages(this.collectedBottlesImages);
         this.x = x;
         this.y = y;
-        this.setPercentage(0, this.COLLECTED_BOTTLES_IMAGES);
+        this.setPercentage(0, this.collectedBottlesImages);
     }
 }

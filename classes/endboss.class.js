@@ -19,7 +19,7 @@ class Endboss extends MovableObject {
     };
 
 
-    alert_Images = [
+    alertImages = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
         'img/4_enemie_boss_chicken/2_alert/G7.png',
@@ -30,7 +30,7 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/2_alert/G12.png'
     ];
 
-    attack_Images = [
+    attackImages = [
         'img/4_enemie_boss_chicken/3_attack/G13.png',
         'img/4_enemie_boss_chicken/3_attack/G14.png',
         'img/4_enemie_boss_chicken/3_attack/G15.png',
@@ -41,24 +41,24 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/3_attack/G20.png'
     ];
 
-    hurt_Images = [
+    hurtImages = [
         'img/4_enemie_boss_chicken/4_hurt/G21.png',
         'img/4_enemie_boss_chicken/4_hurt/G22.png',
         'img/4_enemie_boss_chicken/4_hurt/G23.png'
     ];
 
-    dead_Images = [
+    deadImages = [
         'img/4_enemie_boss_chicken/5_dead/G24.png',
         'img/4_enemie_boss_chicken/5_dead/G25.png',
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ]
 
     constructor() {
-        super().loadImage(this.alert_Images[0]);
-        this.loadImages(this.alert_Images);
-        this.loadImages(this.attack_Images);
-        this.loadImages(this.hurt_Images);
-        this.loadImages(this.dead_Images);
+        super().loadImage(this.alertImages[0]);
+        this.loadImages(this.alertImages);
+        this.loadImages(this.attackImages);
+        this.loadImages(this.hurtImages);
+        this.loadImages(this.deadImages);
         this.animate();
     }
 
@@ -79,12 +79,12 @@ class Endboss extends MovableObject {
         } else if (this.isDead() && this.endbossIsDeadAnimationCounter > 14) {
             this.deadEndscreen();
         } else if (this.isHurt()) {
-            this.playAnimation(this.hurt_Images);
+            this.playAnimation(this.hurtImages);
         } else if (this.energy < 100) {
-            this.playAnimation(this.attack_Images);
+            this.playAnimation(this.attackImages);
             this.move();
         } else {
-            this.playAnimation(this.alert_Images);
+            this.playAnimation(this.alertImages);
         }
     }
 
@@ -92,7 +92,7 @@ class Endboss extends MovableObject {
      * if the endboss is dead, the animation of dead endboss is playing and the endbossIsDeadAnimationcounter starts
      */
     dead() {
-        this.playAnimation(this.dead_Images);
+        this.playAnimation(this.deadImages);
         this.endbossIsDeadAnimationCounter++;
         this.alive = false;
     }
@@ -101,7 +101,7 @@ class Endboss extends MovableObject {
      * if the endbossIsDeadAnimationcounter hits a specific number, the game ends
      */
     deadEndscreen() {
-        this.loadImage(this.dead_Images[2]);
+        this.loadImage(this.deadImages[2]);
         stopGame();
         winOutroscreen();
     }

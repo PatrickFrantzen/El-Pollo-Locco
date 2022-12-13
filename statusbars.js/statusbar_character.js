@@ -1,7 +1,7 @@
 let healthbar;
 let coinbar;
 let bottlebar;
-let boss_healthbar;
+let bossHealthbar;
 
 const CharakterStatusbars = new Statusbar(
     createHealthbar(),
@@ -26,6 +26,6 @@ function createBottlebar() {
 }
 
 function createBossHealtbar() {
-bosshealthbar = new Endbosshealthbar('img/7_statusbars/2_statusbar_endboss/green.png', 500, 0);
-return bosshealthbar;
+bossHealthbar = new Endbosshealthbar('img/7_statusbars/2_statusbar_endboss/green.png', 500, 0);
+return bossHealthbar;
 }

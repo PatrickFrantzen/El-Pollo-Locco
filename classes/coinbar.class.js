@@ -3,7 +3,7 @@ class Coinbar extends Statusbar {
     height = 60;
 
 
-    COLLECTED_COINS_IMAGES =[
+    collectedCoinsImages =[
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png',
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png',
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/40.png',
@@ -14,9 +14,9 @@ class Coinbar extends Statusbar {
 
     constructor(imagePath, x, y) {
         super().loadImage(imagePath);
-        this.loadImages(this.COLLECTED_COINS_IMAGES);
+        this.loadImages(this.collectedCoinsImages);
         this.x = x;
         this.y = y;
-        this.setPercentage(0, this.COLLECTED_COINS_IMAGES);
+        this.setPercentage(0, this.collectedCoinsImages);
     }
 }

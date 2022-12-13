@@ -19,7 +19,7 @@ function getRandomArbitrary(min, max) {
 /*General Game Functions */
 
 function stopGame() {
-    world.western_sound.muted = true;
+    world.westernSound.muted = true;
     for (let i = 1; i < 9999; i++) {
         window.clearInterval(i);
     }

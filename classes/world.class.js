@@ -5,21 +5,21 @@ class World {
     canvas;
     ctx;
     keyboard;
-    camera_x = 0;
+    cameraX= 0;
     statusbars = CharakterStatusbars;
     throwableObjects = [];
     lastThrow;
     bosshit = false;
-    mute_activated = false;
+    muteActivated = false;
 
-    shattering_sound = new Audio('audio/broken_glass.mp3');
-    pain_sound = new Audio('audio/pain.mp3');
-    chicken_sound = new Audio('audio/chicken.mp3')
-    angry_chicken = new Audio('audio/angry_chicken.mp3');
-    throwing_sound = new Audio('audio/throwing.mp3');
-    walking_sound = new Audio('audio/running.mp3');
-    jumping_sound = new Audio('audio/jumping.mp3');
-    western_sound = new Audio('audio/western_theme.mp3');
+    shatteringSound = new Audio('audio/broken_glass.mp3');
+    painSound = new Audio('audio/pain.mp3');
+    chickenSound = new Audio('audio/chicken.mp3')
+    angryChickenSound = new Audio('audio/angry_chicken.mp3');
+    throwingSound = new Audio('audio/throwing.mp3');
+    walkingSound = new Audio('audio/running.mp3');
+    jumpingSound = new Audio('audio/jumping.mp3');
+    westernSound = new Audio('audio/western_theme.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -54,8 +54,8 @@ class World {
      * automatic start of backgroundmusic
      */
     backgroundMusic() {
-        this.western_sound.loop = true;
-        playSound(this.western_sound);
+        this.westernSound.loop = true;
+        playSound(this.westernSound);
     }
 
     /**
@@ -64,9 +64,9 @@ class World {
     checkThrowObjects() {
         if (this.checkIfPepeCanThrow()) {
             this.pepeThrowsBottle();
-            playSound(this.throwing_sound);
+            playSound(this.throwingSound);
         }
-        if (!this.checkForLastThrow(1000)) {
+        if (!this.checkForLastThrow(1250)) {
             this.throwableObjects.splice(0, 1);
         }
     };
@@ -76,7 +76,7 @@ class World {
      * @returns true or false
      */
     checkIfPepeCanThrow() {
-        return this.keyboard.D && this.character.amountOfBottles >= 1 && !this.character.otherDirection && !this.checkForLastThrow(1001);
+        return this.keyboard.D && this.character.amountOfBottles >= 1 && !this.character.otherDirection && !this.checkForLastThrow(1251);
     }
 
     /**
@@ -132,8 +132,8 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && enemy.alive == true) {
                 this.character.hit(5);
-                this.character.updatePepeHealthbar(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES)
-                playSound(this.pain_sound);
+                this.character.updatePepeHealthbar(this.character.energy, this.statusbars.healthbar.healthImages)
+                playSound(this.painSound);
             };
         });
     }
@@ -145,8 +145,8 @@ class World {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss) && endboss.alive == true) {
                 this.character.hit(25);
-                this.character.updatePepeHealthbar(this.character.energy, this.statusbars.healthbar.HEALTH_IMAGES)
-                playSound(this.pain_sound);
+                this.character.updatePepeHealthbar(this.character.energy, this.statusbars.healthbar.healthImages)
+                playSound(this.painSound);
             };
         });
     }
@@ -158,7 +158,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true && !enemy.isAboveGround()) {
                 enemy.alive = false;
-                playSound(this.chicken_sound);
+                playSound(this.chickenSound);
                 setTimeout(() => {
                     this.removeChickenFromArray(enemy);
                 }, 1000);
@@ -175,7 +175,8 @@ class World {
         this.throwableObjects.forEach((bottle) => {
             if (endboss.isColliding(bottle)) {
                 endboss.hit(25);
-                endboss.updateEndbossHealthbar(endboss.energy, this.statusbars.boss_healthbar.HEALTH_IMAGES);
+                bottle.splash();
+                endboss.updateEndbossHealthbar(endboss.energy, this.statusbars.bossHealthbar.healthImages);
                 this.playSoundsForHittingEndboss();
                 throwableBottle.splice(0, 1);
             }
@@ -183,8 +184,8 @@ class World {
     }
 
     playSoundsForHittingEndboss() {
-        playSound(this.shattering_sound);
-        playSound(this.angry_chicken);
+        playSound(this.shatteringSound);
+        playSound(this.angryChickenSound);
     }
 
     removeChickenFromArray(enemy) {
@@ -196,11 +197,7 @@ class World {
      * interval check if variable mute is true or false to mute all sounds
      */
     checkIfMuteIsActive() {
-        if (mute) {
-            this.western_sound.muted = true;
-        } else {
-            this.western_sound.muted = false;
-        }
+        this.westernSound.muted = mute;
     }
 
     /**
@@ -208,16 +205,16 @@ class World {
      */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.translate(this.camera_x, 0);
+        this.ctx.translate(this.cameraX, 0);
         this.addObjectToMap(this.level.backgroundObjects);
         this.addObjectToMap(this.level.clouds);
         //translate einfügen um nicht bewegliche Objekte zu verschieben
-        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.translate(-this.cameraX, 0);
         this.addToMap(this.statusbars.healthbar);
         this.addToMap(this.statusbars.coinbar);
         this.addToMap(this.statusbars.bottlebar);
-        this.addToMap(this.statusbars.boss_healthbar);
-        this.ctx.translate(this.camera_x, 0);
+        this.addToMap(this.statusbars.bossHealthbar);
+        this.ctx.translate(this.cameraX, 0);
         //translate wieder an die Ausgangsposition -> Ergebnis: Die Statusbar bewegt sich mit
         this.addObjectToMap(this.level.coins);
         this.addObjectToMap(this.level.bottles);
@@ -225,7 +222,7 @@ class World {
         this.addObjectToMap(this.level.endboss);
         this.addObjectToMap(this.throwableObjects);
         this.addToMap(this.character);
-        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.translate(-this.cameraX, 0);
 
         let self = this;
         requestAnimationFrame(function () {
