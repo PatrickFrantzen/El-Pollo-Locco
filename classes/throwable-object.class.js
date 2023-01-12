@@ -68,11 +68,10 @@ class ThrowableObject extends MovableObject {
      * as long as the bottle is above ground it rotates and then splash on ground
      */
     play() {
-        if (this.isAboveGround()) {
+        if (this.isAboveGround())
             this.rotate();
-        } else {
+        else
             this.splash();
-        };
     }
 
     rotate() {
@@ -88,7 +87,8 @@ class ThrowableObject extends MovableObject {
      * Function to reduce the playing of the sound to one time
      */
     sound() {
-        if (this.splashSound == true && this.splashSoundCounter == 0) {
+        if (this.splashSound == true && 
+            this.splashSoundCounter == 0) {
             this.splashingSound();
             this.splashSoundCounter++;
         }

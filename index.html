@@ -7,6 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <script src="js/script.js"></script>
     <script src="classes/drawable-object.class.js"></script>
     <script src="classes/movable-object.class.js"></script>
@@ -30,9 +37,11 @@
     <script src="levels/level1.js"></script>
     <script src="statusbars.js/statusbar_character.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/preload.js"></script>
 </head>
 
-<body>
+<body onload="preloadImgs()">
+    <div id="hiddenImg" class="d-none"></div>
     <div id="startscreen" class="startscreen">
         <p class="mobile-phone-warning">Please turn around your mobile phone</p>
         <img src="img/9_intro_outro_screens/start/startscreen_1.png">
@@ -51,7 +60,7 @@
         <button class="button restart " id="restart" onclick="restart()">Restart</button>
         <img class="img-size" src="img/9_intro_outro_screens/game_over/you lost.png">
     </div>
-    
+
     <div class="upper-button-container">
         <div class="volume-container">
             <button class="button d-none" id="btnVolume"><img class="icon" src="img/10_icons/audio.png"
@@ -94,6 +103,7 @@
             </div>
         </div>
     </div>
+    
 
 
 </body>

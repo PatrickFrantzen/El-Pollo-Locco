@@ -102,12 +102,10 @@ class Character extends MovableObject {
      */
     walking() {
         this.world.walkingSound.pause();
-        if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) 
             this.movingRight();
-        };
-        if (this.world.keyboard.LEFT && this.x > 0) {
+        if (this.world.keyboard.LEFT && this.x > 0)
             this.movingLeft();
-        };
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
             playSound(this.world.jumpingSound);
@@ -122,24 +120,24 @@ class Character extends MovableObject {
             this.playAnimation(this.deadImages);
             stopGame();
             lostOutroscreen();
-        } else if (this.isHurt()) {
+            playSound(this.world.loosingSound);
+        } else if (this.isHurt()) 
             this.playAnimation(this.hurtImages);
-        } else if (this.isAboveGround()) {
+        else if (this.isAboveGround())
             this.playAnimation(this.jumpingImages);
-        } else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.levelEndX) {
+        else if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.x < this.world.level.levelEndX)
             this.playAnimation(this.walkingImages);
-        } else {
-            this.checkForIdle()
-        }
+        else
+            this.checkForIdle();
     }
 
     /**
      * After every move a timer starts and it is checked if the character plays idle animations
      */
     checkForIdle() {
-        if (this.isIdle() <= 4) {
+        if (this.isIdle() <= 4)
             this.playAnimation(this.idleImages);
-        } else this.playAnimation(this.longIdleImages);
+        else this.playAnimation(this.longIdleImages);
 
     }
 
@@ -165,9 +163,8 @@ class Character extends MovableObject {
      * when the character moves and is not jumping the walking sound is playing
      */
     playSoundWhileMoving() {
-        if (!this.isAboveGround()) {
-            playSound(this.world.walkingSound)
-        };
+        if (!this.isAboveGround())
+            playSound(this.world.walkingSound);
     }
 
 }

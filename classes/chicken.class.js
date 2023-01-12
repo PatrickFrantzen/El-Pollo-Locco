@@ -56,9 +56,9 @@ class Chicken extends MovableObject {
      * if the chicken is alive the walking animation is playing and if it is dead the dead image is loaded.
      */
     play() {
-        if (this.alive == true) {
+        if (this.alive == true)
             this.playAnimation(this.walkingImages);
-        } else {
+        else {
             this.loadImage(this.deadImages);
             clearInterval(this.playInterval);
             clearInterval(this.moveInterval);

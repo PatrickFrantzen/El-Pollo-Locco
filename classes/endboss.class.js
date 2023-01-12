@@ -78,6 +78,7 @@ class Endboss extends MovableObject {
             this.dead();
         } else if (this.isDead() && this.endbossIsDeadAnimationCounter > 14) {
             this.deadEndscreen();
+            playSound(world.winningSound);
         } else if (this.isHurt()) {
             this.playAnimation(this.hurtImages);
         } else if (this.energy < 100) {

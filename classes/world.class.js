@@ -13,6 +13,8 @@ class World {
     muteActivated = false;
 
     shatteringSound = new Audio('audio/broken_glass.mp3');
+    collectingBottleSound = new Audio('audio/collectingBottle.mp3');
+    collectingCoinSound = new Audio ('audio/collectingCoin.mp3')
     painSound = new Audio('audio/pain.mp3');
     chickenSound = new Audio('audio/chicken.mp3')
     angryChickenSound = new Audio('audio/angry_chicken.mp3');
@@ -20,7 +22,8 @@ class World {
     walkingSound = new Audio('audio/running.mp3');
     jumpingSound = new Audio('audio/jumping.mp3');
     westernSound = new Audio('audio/western_theme.mp3');
-
+    winningSound = new Audio ('audio/winning.mp3');
+    loosingSound = new Audio ('audio/loosing.mp3')
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -66,9 +69,8 @@ class World {
             this.pepeThrowsBottle();
             playSound(this.throwingSound);
         }
-        if (!this.checkForLastThrow(1250)) {
+        if (!this.checkForLastThrow(1250))
             this.throwableObjects.splice(0, 1);
-        }
     };
 
     /**
@@ -76,7 +78,10 @@ class World {
      * @returns true or false
      */
     checkIfPepeCanThrow() {
-        return this.keyboard.D && this.character.amountOfBottles >= 1 && !this.character.otherDirection && !this.checkForLastThrow(1251);
+        return this.keyboard.D && 
+        this.character.amountOfBottles >= 1 && 
+        !this.character.otherDirection && 
+        !this.checkForLastThrow(1251);
     }
 
     /**
@@ -109,6 +114,7 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.character.collectCoins(coin);
                 this.character.updateCoinbar();
+                playSound(this.collectingCoinSound);
             };
         });
     }
@@ -121,6 +127,7 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.character.collectBottles(bottle);
                 this.character.updateBottlebar();
+                playSound(this.collectingBottleSound);
             };
         });
     }
@@ -130,7 +137,8 @@ class World {
      */
     pepeCollidingEnemy() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && enemy.alive == true) {
+            if (this.character.isColliding(enemy) && 
+                enemy.alive == true) {
                 this.character.hit(5);
                 this.character.updatePepeHealthbar(this.character.energy, this.statusbars.healthbar.healthImages)
                 playSound(this.painSound);
@@ -143,7 +151,8 @@ class World {
      */
     pepeCollidingEndboss() {
         this.level.endboss.forEach((endboss) => {
-            if (this.character.isColliding(endboss) && endboss.alive == true) {
+            if (this.character.isColliding(endboss) && 
+                endboss.alive == true) {
                 this.character.hit(25);
                 this.character.updatePepeHealthbar(this.character.energy, this.statusbars.healthbar.healthImages)
                 playSound(this.painSound);
@@ -156,7 +165,10 @@ class World {
      */
     pepeCollidingEnemyFromAbove() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.alive == true && !enemy.isAboveGround()) {
+            if (this.character.isColliding(enemy) && 
+                this.character.isAboveGround() && 
+                enemy.alive == true && 
+                !enemy.isAboveGround()) {
                 enemy.alive = false;
                 playSound(this.chickenSound);
                 setTimeout(() => {
@@ -206,28 +218,48 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.cameraX, 0);
-        this.addObjectToMap(this.level.backgroundObjects);
-        this.addObjectToMap(this.level.clouds);
+        this.drawBackgroundsAndClouds();
         //translate einfügen um nicht bewegliche Objekte zu verschieben
         this.ctx.translate(-this.cameraX, 0);
-        this.addToMap(this.statusbars.healthbar);
-        this.addToMap(this.statusbars.coinbar);
-        this.addToMap(this.statusbars.bottlebar);
-        this.addToMap(this.statusbars.bossHealthbar);
+        this.drawStatusbars();
         this.ctx.translate(this.cameraX, 0);
         //translate wieder an die Ausgangsposition -> Ergebnis: Die Statusbar bewegt sich mit
-        this.addObjectToMap(this.level.coins);
-        this.addObjectToMap(this.level.bottles);
-        this.addObjectToMap(this.level.enemies);
-        this.addObjectToMap(this.level.endboss);
-        this.addObjectToMap(this.throwableObjects);
-        this.addToMap(this.character);
+        this.drawCollectibleItems();
+        this.drawEnemies();
+        this.drawThrowableItemsAndCharacter();
         this.ctx.translate(-this.cameraX, 0);
 
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
+    }
+
+    drawBackgroundsAndClouds() {
+        this.addObjectToMap(this.level.backgroundObjects);
+        this.addObjectToMap(this.level.clouds);
+    }
+
+    drawStatusbars() {
+        this.addToMap(this.statusbars.healthbar);
+        this.addToMap(this.statusbars.coinbar);
+        this.addToMap(this.statusbars.bottlebar);
+        this.addToMap(this.statusbars.bossHealthbar);
+    }
+
+    drawCollectibleItems() {
+        this.addObjectToMap(this.level.coins);
+        this.addObjectToMap(this.level.bottles);
+    }
+
+    drawEnemies() {
+        this.addObjectToMap(this.level.enemies);
+        this.addObjectToMap(this.level.endboss);
+    }
+
+    drawThrowableItemsAndCharacter() {
+        this.addObjectToMap(this.throwableObjects);
+        this.addToMap(this.character);
     }
 
     addObjectToMap(objects) {
