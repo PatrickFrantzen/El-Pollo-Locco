@@ -22,8 +22,8 @@ class Chicken extends MovableObject {
 
     offset = {
         top: 35,
-        left: 25,
-        right: 25,
+        left: 0,
+        right: 0,
         bottom: 35
     };
 
